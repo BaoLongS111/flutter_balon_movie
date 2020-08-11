@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: "暴龙视频",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.yellow,
           visualDensity: VisualDensity.adaptivePlatformDensity),
       home: TabNavigator(),
     );

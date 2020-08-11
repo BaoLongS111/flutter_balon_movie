@@ -11,9 +11,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("暴龙视频"),
-      ),
+      backgroundColor: Color(0xfff2f2f2),
       body: Center(
         child: Text("首页"),
       ),
