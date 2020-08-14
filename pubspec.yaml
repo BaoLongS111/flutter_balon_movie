@@ -79,3 +79,6 @@ flutter:
     - family: MyIcon
       fonts:
         - asset: fonts/navbar.ttf
+    - family: MyIcon2
+      fonts:
+        - asset: fonts/logo.ttf
