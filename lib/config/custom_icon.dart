@@ -20,4 +20,8 @@ class CustomIcon {
       const IconData(0xe625, fontFamily: 'MyIcon', matchTextDirection: true);
   static const IconData hot_select =
       const IconData(0xe605, fontFamily: 'MyIcon', matchTextDirection: true);
+  static const IconData download =
+      const IconData(0xe607, fontFamily: 'home_page', matchTextDirection: true);
+  static const IconData history =
+      const IconData(0xe606, fontFamily: 'home_page', matchTextDirection: true);
 }
