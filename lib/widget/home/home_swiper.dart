@@ -38,9 +38,12 @@ class _HomeSwiperState extends State<HomeSwiper> {
           autoplay: true,
           key: UniqueKey(),
           itemBuilder: (BuildContext context, int index) {
-            return new Image.network(
-              casualList[index].image,
-              fit: BoxFit.fill,
+            return new ClipRRect(
+              borderRadius: BorderRadius.circular(14),
+              child: Image.network(
+                casualList[index].image,
+                fit: BoxFit.fill,
+              ),
             );
           },
           itemCount: casualList.length,

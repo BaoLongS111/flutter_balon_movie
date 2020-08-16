@@ -85,3 +85,13 @@ flutter:
         - asset: fonts/iconfont.ttf
   assets:
     - assets/images/dragon.png
+    - assets/images/home/bg_navbar.png
+    - assets/images/home/bg_login.png
+    - assets/images/home/icon_ghgy.png
+    - assets/images/home/icon_jsby.png
+    - assets/images/home/icon_lmdn.png
+    - assets/images/home/icon_qbfl.png
+    - assets/images/home/icon_rqsn.png
+    - assets/images/home/icon_snqj.png
+    - assets/images/home/icon_wmsp.png
+    - assets/images/home/icon_zfyh.png
