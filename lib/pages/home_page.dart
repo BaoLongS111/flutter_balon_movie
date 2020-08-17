@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:balon_movie/config/custom_icon.dart';
 import 'package:balon_movie/widget/home/home_swiper.dart';
 import 'package:balon_movie/widget/home/home_nav.dart';
+import 'package:balon_movie/widget/home/video_demo.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -23,15 +24,11 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           elevation: 0, //appbar的阴影
           backgroundColor: Colors.transparent,
-          leading: Container(
-            width: 45,
+          leading: Image.asset(
+            'assets/images/dragon.png',
+            fit: BoxFit.fill,
             height: 45,
-            child: Image.asset(
-              'assets/images/dragon.png',
-              fit: BoxFit.fill,
-              height: 45,
-              width: 45,
-            ),
+            width: 45,
           ),
           title: Text("暴龙视频"),
           actions: [

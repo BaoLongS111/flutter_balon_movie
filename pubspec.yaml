@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^0.1.3
   dio: ^3.0.0
   flutter_swiper: ^1.1.6
+  # fijkplayer: ^0.8.4
 
 dev_dependencies:
   flutter_test:
@@ -95,3 +96,13 @@ flutter:
     - assets/images/home/icon_snqj.png
     - assets/images/home/icon_wmsp.png
     - assets/images/home/icon_zfyh.png
+    - assets/images/nav/icon_wode.png
+    - assets/images/nav/icon_wode_sel.png
+    - assets/images/nav/icon_fenlei.png
+    - assets/images/nav/icon_fenlei_sel.png
+    - assets/images/nav/icon_redian.png
+    - assets/images/nav/icon_redian_sel.png
+    - assets/images/nav/icon_short_video.png
+    - assets/images/nav/icon_short_video_sel.png
+    - assets/images/nav/icon_shouye.png
+    - assets/images/nav/icon_shouye_sel.png

@@ -20,7 +20,7 @@ class _HomeNavState extends State<HomeNav> {
   ];
 
   Widget _gridViewItemUI(BuildContext context, item) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {},
       child: Column(
         children: [
@@ -42,9 +42,10 @@ class _HomeNavState extends State<HomeNav> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 180,
       padding: EdgeInsets.fromLTRB(5, 12, 5, 12),
       child: GridView.count(
+          physics: NeverScrollableScrollPhysics(), //去除滚动
           crossAxisCount: 4,
           padding: EdgeInsets.all(3.0),
           children: navList.map((i) => _gridViewItemUI(context, i)).toList()),
