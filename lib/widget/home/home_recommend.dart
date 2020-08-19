@@ -11,7 +11,7 @@ class HomeRecommend extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(8),
-      height: 890,
+      height: 560,
       child: Column(
         children: [
           Row(
@@ -25,7 +25,7 @@ class HomeRecommend extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Container(
-            height: 830,
+            height: 480,
             child: GridView.count(
               crossAxisCount: 2,
               physics: NeverScrollableScrollPhysics(),
@@ -48,7 +48,10 @@ class HomeRecommend extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5.0),
                   child: AspectRatio(
                       aspectRatio: 1.48,
-                      child: Image.network(item.vodPic, fit: BoxFit.fill)),
+                      child: FadeInImage.assetNetwork(
+                          placeholder: "assets/images/no_banner.png",
+                          image: item.vodPic,
+                          fit: BoxFit.fill)),
                 ),
                 SizedBox(height: 8),
                 Text(
@@ -56,6 +59,7 @@ class HomeRecommend extends StatelessWidget {
                   softWrap: true,
                   textAlign: TextAlign.left,
                   overflow: TextOverflow.ellipsis,
+                  textDirection: TextDirection.ltr,
                   maxLines: 1,
                   style: TextStyle(fontSize: 14, color: Colors.white70),
                 )

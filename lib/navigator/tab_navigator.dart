@@ -58,13 +58,13 @@ class _TabNavigatorState extends State<TabNavigator> {
           items: [
             BottomNavigationBarItem(
                 icon: Image.asset(
-                  "assets/images/nav/icon_shouye.png",
+                  "assets/images/tabbar/icon_shouye.png",
                   fit: BoxFit.fill,
                   width: 22,
                   height: 22,
                 ),
                 activeIcon: Image.asset(
-                  "assets/images/nav/icon_shouye_sel.png",
+                  "assets/images/tabbar/icon_shouye_sel.png",
                   fit: BoxFit.fill,
                   width: 24,
                   height: 24,
@@ -72,13 +72,13 @@ class _TabNavigatorState extends State<TabNavigator> {
                 title: Text("首页")),
             BottomNavigationBarItem(
                 icon: Image.asset(
-                  "assets/images/nav/icon_fenlei.png",
+                  "assets/images/tabbar/icon_fenlei.png",
                   fit: BoxFit.fill,
                   width: 22,
                   height: 22,
                 ),
                 activeIcon: Image.asset(
-                  "assets/images/nav/icon_fenlei_sel.png",
+                  "assets/images/tabbar/icon_fenlei_sel.png",
                   fit: BoxFit.fill,
                   width: 24,
                   height: 24,
@@ -88,13 +88,13 @@ class _TabNavigatorState extends State<TabNavigator> {
                 )),
             BottomNavigationBarItem(
                 icon: Image.asset(
-                  "assets/images/nav/icon_short_video.png",
+                  "assets/images/tabbar/icon_short_video.png",
                   fit: BoxFit.fill,
                   width: 22,
                   height: 22,
                 ),
                 activeIcon: Image.asset(
-                  "assets/images/nav/icon_short_video_sel.png",
+                  "assets/images/tabbar/icon_short_video_sel.png",
                   fit: BoxFit.fill,
                   width: 24,
                   height: 24,
@@ -104,13 +104,13 @@ class _TabNavigatorState extends State<TabNavigator> {
                 )),
             BottomNavigationBarItem(
                 icon: Image.asset(
-                  "assets/images/nav/icon_redian.png",
+                  "assets/images/tabbar/icon_redian.png",
                   fit: BoxFit.fill,
                   width: 22,
                   height: 22,
                 ),
                 activeIcon: Image.asset(
-                  "assets/images/nav/icon_redian_sel.png",
+                  "assets/images/tabbar/icon_redian_sel.png",
                   fit: BoxFit.fill,
                   width: 24,
                   height: 24,
@@ -120,13 +120,13 @@ class _TabNavigatorState extends State<TabNavigator> {
                 )),
             BottomNavigationBarItem(
                 icon: Image.asset(
-                  "assets/images/nav/icon_wode.png",
+                  "assets/images/tabbar/icon_wode.png",
                   fit: BoxFit.fill,
                   width: 22,
                   height: 22,
                 ),
                 activeIcon: Image.asset(
-                  "assets/images/nav/icon_wode_sel.png",
+                  "assets/images/tabbar/icon_wode_sel.png",
                   fit: BoxFit.fill,
                   width: 24,
                   height: 24,

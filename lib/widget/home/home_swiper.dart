@@ -1,33 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:balon_movie/dao/home_dao.dart';
 import 'package:balon_movie/model/home_casual.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
-class HomeSwiper extends StatefulWidget {
-  HomeSwiper({Key key}) : super(key: key);
+class HomeSwiper extends StatelessWidget {
+  const HomeSwiper({Key key, @required this.casualList}) : super(key: key);
 
-  @override
-  _HomeSwiperState createState() => _HomeSwiperState();
-}
-
-class _HomeSwiperState extends State<HomeSwiper> {
-  List<HomeCasual> casualList = [];
-
-  loadData() {
-    HomeDao.getHomeCasual().then((value) {
-      setState(() {
-        casualList = value;
-      });
-    }).catchError((e) {
-      throw new Exception(e.toString());
-    });
-  }
-
-  @override
-  void initState() {
-    loadData();
-    super.initState();
-  }
+  final List<HomeCasual> casualList;
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +18,10 @@ class _HomeSwiperState extends State<HomeSwiper> {
           itemBuilder: (BuildContext context, int index) {
             return new ClipRRect(
               borderRadius: BorderRadius.circular(14),
-              child: Image.network(
-                casualList[index].image,
-                fit: BoxFit.fill,
-              ),
+              child: FadeInImage.assetNetwork(
+                  placeholder: "assets/images/no_banner.png",
+                  image: casualList[index].image,
+                  fit: BoxFit.fill),
             );
           },
           itemCount: casualList.length,

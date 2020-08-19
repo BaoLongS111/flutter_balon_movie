@@ -96,15 +96,18 @@ flutter:
     - assets/images/home/icon_snqj.png
     - assets/images/home/icon_wmsp.png
     - assets/images/home/icon_zfyh.png
-    - assets/images/nav/icon_wode.png
-    - assets/images/nav/icon_wode_sel.png
-    - assets/images/nav/icon_fenlei.png
-    - assets/images/nav/icon_fenlei_sel.png
-    - assets/images/nav/icon_redian.png
-    - assets/images/nav/icon_redian_sel.png
-    - assets/images/nav/icon_short_video.png
-    - assets/images/nav/icon_short_video_sel.png
-    - assets/images/nav/icon_shouye.png
-    - assets/images/nav/icon_shouye_sel.png
+    - assets/images/tabbar/icon_wode.png
+    - assets/images/tabbar/icon_wode_sel.png
+    - assets/images/tabbar/icon_fenlei.png
+    - assets/images/tabbar/icon_fenlei_sel.png
+    - assets/images/tabbar/icon_redian.png
+    - assets/images/tabbar/icon_redian_sel.png
+    - assets/images/tabbar/icon_short_video.png
+    - assets/images/tabbar/icon_short_video_sel.png
+    - assets/images/tabbar/icon_shouye.png
+    - assets/images/tabbar/icon_shouye_sel.png
     - assets/images/home/banner_look.png
     - assets/images/home/box_banner.png
+    - assets/images/home/icon_look_record.png
+    - assets/images/home/icon_xz.png
+    - assets/images/no_banner.png
