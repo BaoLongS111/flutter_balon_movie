@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:balon_movie/model/home_casual.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomeSwiper extends StatelessWidget {

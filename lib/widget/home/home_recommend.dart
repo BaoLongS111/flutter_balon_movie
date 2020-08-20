@@ -18,8 +18,26 @@ class HomeRecommend extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title,
-                  style: TextStyle(color: Colors.white70, fontSize: 18)),
+              Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(5, 8, 5, 5),
+                    height: 18,
+                    width: 5,
+                    decoration: BoxDecoration(
+                        color: Colors.red,
+                        gradient: LinearGradient(
+                          // 线性渐变，如果没有指定开始和结束的地方，则默认从左边到右边
+                          colors: [Color(0xffCB356B), Color(0xffCB356B)],
+                          begin: Alignment.topCenter, // 开始
+                          end: Alignment.bottomCenter, // 结束
+                        ),
+                        borderRadius: BorderRadius.circular(3)),
+                  ),
+                  Text(title,
+                      style: TextStyle(color: Colors.white, fontSize: 18)),
+                ],
+              ),
               Text('更多>', style: TextStyle(color: Colors.grey))
             ],
           ),
