@@ -1,5 +1,5 @@
 import 'package:balon_movie/dao/home_dao.dart';
-import 'package:balon_movie/model/home_casual.dart';
+import 'package:balon_movie/model/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:balon_movie/config/custom_icon.dart';
 import 'package:balon_movie/widget/home/home_swiper.dart';
@@ -14,30 +14,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var swiperList = [];
-  var guochanList = [];
-  var jingpinList = [];
-  var wumaList = [];
-  var yazhouList = [];
-  var zhongwenList = [];
-  var hanguoList = [];
-  var katongList = [];
-  var shunvList = [];
-  var oumeiList = [];
+  List swiperList = [];
+  List guochanList = [];
+  List jingpinList = [];
+  List wumaList = [];
+  List yazhouList = [];
+  List zhongwenList = [];
+  List hanguoList = [];
+  List katongList = [];
+  List shunvList = [];
+  List oumeiList = [];
 
   Future<Null> _handleRefresh() async {
     await HomeDao.getHomeData().then((value) {
       setState(() {
-        this.swiperList = value[0];
-        this.guochanList = value[1];
-        this.jingpinList = value[2];
-        this.wumaList = value[3];
-        this.shunvList = value[4];
-        this.katongList = value[5];
-        this.hanguoList = value[6];
-        this.zhongwenList = value[7];
-        this.yazhouList = value[8];
-        this.oumeiList = value[9];
+        this.swiperList = value.homeCasual;
+        this.guochanList = value.guochan;
+        this.jingpinList = value.jingpin;
+        this.wumaList = value.wuma;
+        this.shunvList = value.shunv;
+        this.katongList = value.katong;
+        this.hanguoList = value.lunli;
+        this.zhongwenList = value.zhongwen;
+        this.yazhouList = value.yazhou;
+        this.oumeiList = value.oumei;
       });
     }).catchError((e) {
       throw Exception(e.toString());
@@ -53,28 +53,49 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<dynamic>>(
-      future: HomeDao.getHomeData(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/home/bg_login.png"),
-                      fit: BoxFit.cover)),
-              child: Scaffold(
-                backgroundColor: Colors.transparent,
-                appBar: _appBar,
-                body: RefreshIndicator(
-                  onRefresh: _handleRefresh, //下拉刷新
-                  child: _listView,
-                ),
-              ));
-        } else {
-          return Center(child: CircularProgressIndicator());
-        }
-      },
-    );
+    return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/home/bg_login.png"),
+                fit: BoxFit.cover)),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: _appBar,
+          body: FutureBuilder<dynamic>(
+              initialData: HomeDao.getHomeData(),
+              future: HomeDao.getHomeData(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return new Text(
+                        'Press button to start'); //如果_calculation未执行则提示：请点击开始
+                  case ConnectionState.waiting:
+                    return Center(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(),
+                        SizedBox(height: 7),
+                        Text(
+                          "加载中...",
+                          style: TextStyle(color: Colors.white, fontSize: 12),
+                        )
+                      ],
+                    )); //如果_calculation正在执行则提示：加载中
+                  case ConnectionState.done: //如果_calculation执行完毕
+                    if (snapshot.hasError) //若_calculation执行出现异常
+                      return new Text('Error: ${snapshot.error}');
+                    else //若_calculation执行正常完成
+                      return RefreshIndicator(
+                        onRefresh: _handleRefresh, //下拉刷新
+                        child: _listView,
+                      );
+                    break;
+                  default:
+                    return null;
+                }
+              }),
+        ));
   }
 
   Widget get _appBar {
@@ -93,7 +114,7 @@ class _HomePageState extends State<HomePage> {
           height: 30,
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
           decoration: BoxDecoration(
-              color: Color(0xffbdc3c7),
+              color: Color(0x33bdc3c7),
               borderRadius: BorderRadius.circular(15)),
           child: Row(
             children: [
@@ -105,7 +126,8 @@ class _HomePageState extends State<HomePage> {
                         contentPadding: EdgeInsets.fromLTRB(5, 0, 5, 11),
                         border: InputBorder.none,
                         hintText: "小泽玛利亚",
-                        hintStyle: TextStyle(fontSize: 15)),
+                        hintStyle:
+                            TextStyle(fontSize: 15, color: Colors.white70)),
                   ))
             ],
           )),
