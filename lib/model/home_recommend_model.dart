@@ -1,4 +1,4 @@
-class HomeRecommend {
+class HomeRecommendModel {
   final int vodID;
   final String vodName;
   final String vodEn;
@@ -18,7 +18,7 @@ class HomeRecommend {
   final int vodTimeAdd;
   final String vodPlayUrl;
 
-  HomeRecommend(
+  HomeRecommendModel(
       {this.vodID,
       this.vodName,
       this.vodEn,
@@ -38,8 +38,8 @@ class HomeRecommend {
       this.vodTimeAdd,
       this.vodPlayUrl});
 
-  factory HomeRecommend.fromJson(Map<String, dynamic> json) {
-    return HomeRecommend(
+  factory HomeRecommendModel.fromJson(Map<String, dynamic> json) {
+    return HomeRecommendModel(
         vodID: json['vod_id'],
         vodName: json['vod_name'],
         vodEn: json['vod_en'],

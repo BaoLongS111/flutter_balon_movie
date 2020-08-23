@@ -1,36 +1,49 @@
-// import 'package:fijkplayer/fijkplayer.dart';
+import 'package:flutter/material.dart';
+
+class VideoPage extends StatefulWidget {
+  VideoPage({Key key}) : super(key: key);
+
+  @override
+  _VideoPageState createState() => _VideoPageState();
+}
+
+class _VideoPageState extends State<VideoPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text("demo"),
+      ),
+      body: Center(
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        child: Text("小视频"),
+      ),
+    );
+  }
+}
+
 // import 'package:flutter/material.dart';
+// import 'package:fijkplayer/fijkplayer.dart';
 
-// class VideoScreen extends StatefulWidget {
-//   final String url;
-
-//   VideoScreen({@required this.url});
+// class VideoPage extends StatefulWidget {
+//   VideoPage({Key key}) : super(key: key);
 
 //   @override
-//   _VideoScreenState createState() => _VideoScreenState();
+//   _VideoPageState createState() => _VideoPageState();
 // }
 
-// class _VideoScreenState extends State<VideoScreen> {
+// class _VideoPageState extends State<VideoPage> {
 //   final FijkPlayer player = FijkPlayer();
-
-//   _VideoScreenState();
 
 //   @override
 //   void initState() {
 //     super.initState();
-//     player.setDataSource(widget.url, autoPlay: true);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(title: Text("Fijkplayer Example")),
-//         body: Container(
-//           alignment: Alignment.center,
-//           child: FijkView(
-//             player: player,
-//           ),
-//         ));
+//     player.setDataSource(
+//         "https://video.jializyw.com:8800/20200726/jta5mLhR/index.m3u8",
+//         autoPlay: true);
 //   }
 
 //   @override
@@ -38,24 +51,20 @@
 //     super.dispose();
 //     player.release();
 //   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         // Here we take the value from the MyHomePage object that was created by
+//         // the App.build method, and use it to set our appbar title.
+//         title: Text("demo"),
+//       ),
+//       body: Center(
+//         // Center is a layout widget. It takes a single child and positions it
+//         // in the middle of the parent.
+//         child: FijkView(player: player),
+//       ),
+//     );
+//   }
 // }
-
-import 'package:flutter/material.dart';
-
-class VideoScreen extends StatefulWidget {
-  VideoScreen({Key key}) : super(key: key);
-
-  @override
-  _VideoScreenState createState() => _VideoScreenState();
-}
-
-class _VideoScreenState extends State<VideoScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text("小视频"),
-      ),
-    );
-  }
-}

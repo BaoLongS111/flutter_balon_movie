@@ -29,7 +29,7 @@ class _TabNavigatorState extends State<TabNavigator> {
         children: [
           HomePage(),
           CategoryPage(),
-          VideoScreen(
+          VideoPage(
               // url: "https://video.jializyw.com:8800/20200726/jta5mLhR/index.m3u8",
               ),
           HotPage(),

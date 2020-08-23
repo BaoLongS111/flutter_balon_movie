@@ -1,10 +1,11 @@
 import 'package:balon_movie/dao/home_dao.dart';
-import 'package:balon_movie/model/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:balon_movie/config/custom_icon.dart';
 import 'package:balon_movie/widget/home/home_swiper.dart';
 import 'package:balon_movie/widget/home/home_nav.dart';
 import 'package:balon_movie/widget/home/home_recommend.dart';
+
+import '../model/home_model.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -13,7 +14,8 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
   List swiperList = [];
   List guochanList = [];
   List jingpinList = [];
@@ -52,6 +54,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
@@ -61,10 +64,10 @@ class _HomePageState extends State<HomePage> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: _appBar,
-          body: FutureBuilder<dynamic>(
-              initialData: HomeDao.getHomeData(),
+          body: FutureBuilder<HomeModel>(
               future: HomeDao.getHomeData(),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              builder:
+                  (BuildContext context, AsyncSnapshot<HomeModel> snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
                     return new Text(
@@ -174,4 +177,8 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
