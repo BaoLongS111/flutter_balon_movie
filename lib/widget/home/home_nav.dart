@@ -27,8 +27,8 @@ class _HomeNavState extends State<HomeNav> {
           Image.asset(
             item["path"],
             fit: BoxFit.fill,
-            width: 45,
-            height: 45,
+            width: 37,
+            height: 37,
           ),
           Text(
             item["type"],

@@ -1,11 +1,11 @@
 import 'package:balon_movie/dao/home_dao.dart';
+import 'package:balon_movie/model/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:balon_movie/config/custom_icon.dart';
 import 'package:balon_movie/widget/home/home_swiper.dart';
 import 'package:balon_movie/widget/home/home_nav.dart';
 import 'package:balon_movie/widget/home/home_recommend.dart';
-
-import '../model/home_model.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -16,6 +16,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  Future<HomeModel> _future;
+  bool isFirstLoad = true; //是否第一次加载，第一次显示loadingView，否则不显示
   List swiperList = [];
   List guochanList = [];
   List jingpinList = [];
@@ -30,32 +35,35 @@ class _HomePageState extends State<HomePage>
   Future<Null> _handleRefresh() async {
     await HomeDao.getHomeData().then((value) {
       setState(() {
-        this.swiperList = value.homeCasual;
-        this.guochanList = value.guochan;
-        this.jingpinList = value.jingpin;
-        this.wumaList = value.wuma;
-        this.shunvList = value.shunv;
-        this.katongList = value.katong;
-        this.hanguoList = value.lunli;
-        this.zhongwenList = value.zhongwen;
-        this.yazhouList = value.yazhou;
-        this.oumeiList = value.oumei;
+        var data = value;
+        isFirstLoad = false;
+        this.swiperList = data.homeCasual;
+        this.guochanList = data.guochan;
+        this.jingpinList = data.jingpin;
+        this.wumaList = data.wuma;
+        this.shunvList = data.shunv;
+        this.katongList = data.katong;
+        this.hanguoList = data.lunli;
+        this.zhongwenList = data.zhongwen;
+        this.yazhouList = data.yazhou;
+        this.oumeiList = data.oumei;
       });
     }).catchError((e) {
       throw Exception(e.toString());
     });
-    return null;
   }
 
   @override
   void initState() {
     _handleRefresh();
+    _future = HomeDao.getHomeData(); //配合keepAlive使用
     super.initState();
   }
 
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
+    super.build(context); //配合keepAlive使用
     return Container(
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -65,37 +73,39 @@ class _HomePageState extends State<HomePage>
           backgroundColor: Colors.transparent,
           appBar: _appBar,
           body: FutureBuilder<HomeModel>(
-              future: HomeDao.getHomeData(),
+              future: _future,
               builder:
                   (BuildContext context, AsyncSnapshot<HomeModel> snapshot) {
                 switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                    return new Text(
-                        'Press button to start'); //如果_calculation未执行则提示：请点击开始
                   case ConnectionState.waiting:
-                    return Center(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircularProgressIndicator(),
-                        SizedBox(height: 7),
-                        Text(
-                          "加载中...",
-                          style: TextStyle(color: Colors.white, fontSize: 12),
-                        )
-                      ],
-                    )); //如果_calculation正在执行则提示：加载中
-                  case ConnectionState.done: //如果_calculation执行完毕
-                    if (snapshot.hasError) //若_calculation执行出现异常
+                    if (isFirstLoad) {
+                      return Center(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircularProgressIndicator(
+                            backgroundColor: Colors.white,
+                          ),
+                          SizedBox(height: 7),
+                          Text(
+                            "加载中...",
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                          )
+                        ],
+                      ));
+                    } else {
+                      return _listView;
+                    }
+                    break;
+                  case ConnectionState.done: //如果执行完毕
+                    if (snapshot.hasError) //若执行出现异常
                       return new Text('Error: ${snapshot.error}');
-                    else //若_calculation执行正常完成
-                      return RefreshIndicator(
-                        onRefresh: _handleRefresh, //下拉刷新
-                        child: _listView,
-                      );
+                    else //若执行正常完成
+                      return _listView;
                     break;
                   default:
                     return null;
+                    break;
                 }
               }),
         ));
@@ -153,32 +163,40 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget get _listView {
-    return ListView(
-      children: [
-        HomeSwiper(casualList: this.swiperList),
-        HomeNav(),
-        HomeRecommend(list: this.jingpinList, title: "精品推荐"),
-        HomeRecommend(list: this.guochanList, title: "国产情色"),
-        Padding(
-          padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
-          child: Image.asset("assets/images/home/banner_look.png"),
-        ),
-        HomeRecommend(list: this.wumaList, title: "无码专区"),
-        HomeRecommend(list: this.yazhouList, title: "亚洲有码"),
-        HomeRecommend(list: this.zhongwenList, title: "中文字幕"),
-        Padding(
-          padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
-          child: Image.asset("assets/images/home/box_banner.png"),
-        ),
-        HomeRecommend(list: this.hanguoList, title: "经典伦理"),
-        HomeRecommend(list: this.katongList, title: "成人动漫"),
-        HomeRecommend(list: this.shunvList, title: "熟女人妻"),
-        HomeRecommend(list: this.oumeiList, title: "欧美性爱"),
-      ],
-    );
+    return EasyRefresh(
+        header: ClassicalHeader(
+            bgColor: Colors.black87,
+            textColor: Colors.white,
+            showInfo: true,
+            noMoreText: '没有更多数据',
+            refreshText: "下拉刷新",
+            refreshReadyText: "释放立即刷新",
+            refreshingText: "正在刷新",
+            refreshedText: "刷新成功",
+            infoColor: Colors.white70),
+        onRefresh: _handleRefresh,
+        child: ListView(
+          children: [
+            HomeSwiper(casualList: this.swiperList),
+            HomeNav(),
+            HomeRecommend(list: this.jingpinList, title: "精品推荐"),
+            HomeRecommend(list: this.guochanList, title: "国产情色"),
+            Padding(
+              padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+              child: Image.asset("assets/images/home/banner_look.png"),
+            ),
+            HomeRecommend(list: this.wumaList, title: "无码专区"),
+            HomeRecommend(list: this.yazhouList, title: "亚洲有码"),
+            HomeRecommend(list: this.zhongwenList, title: "中文字幕"),
+            Padding(
+              padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+              child: Image.asset("assets/images/home/box_banner.png"),
+            ),
+            HomeRecommend(list: this.hanguoList, title: "经典伦理"),
+            HomeRecommend(list: this.katongList, title: "成人动漫"),
+            HomeRecommend(list: this.shunvList, title: "熟女人妻"),
+            HomeRecommend(list: this.oumeiList, title: "欧美性爱"),
+          ],
+        ));
   }
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
 }

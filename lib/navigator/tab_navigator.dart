@@ -14,9 +14,6 @@ class TabNavigator extends StatefulWidget {
 }
 
 class _TabNavigatorState extends State<TabNavigator> {
-  //选中图标大小
-  double _defaultIconSize = 24.0;
-  double _activeIconSize = 28.0;
   //控制器
   final PageController _controller = PageController(initialPage: 0);
   int _currentIndex = 0;
@@ -38,7 +35,7 @@ class _TabNavigatorState extends State<TabNavigator> {
       ),
       bottomNavigationBar: new Theme(
         data: Theme.of(context).copyWith(
-            //设置背景色`BottomNavigationBar`
+            //设置背景色`BottomNavigationBar
             canvasColor: Colors.black87,
             //设置高亮文字颜色
             primaryColor: Colors.red,

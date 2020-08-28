@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomeSwiper extends StatelessWidget {
-  const HomeSwiper({Key key, @required this.casualList}) : super(key: key);
-
   final List<HomeCasual> casualList;
-
+  const HomeSwiper({Key key, @required this.casualList}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,7 +25,13 @@ class HomeSwiper extends StatelessWidget {
           itemCount: casualList.length,
           viewportFraction: 0.9,
           scale: 0.95,
-          pagination: new SwiperPagination(),
+          pagination: SwiperPagination(
+              builder: DotSwiperPaginationBuilder(
+                  size: 5, //点点没选中时候的大小
+                  activeSize: 8, //点点选中后的大小
+                  color: Colors.grey, //点点的颜色
+                  activeColor: Colors.white),
+              alignment: Alignment.bottomCenter),
         ));
   }
 }

@@ -8,7 +8,7 @@ class HomeDao {
   static Future<HomeModel> getHomeData() async {
     final Response response = await Dio().get(HOME_DATA);
     if (response.statusCode == 200) {
-      return HomeModel.fromJson(response.data);
+      return HomeModel.fromJson(response.data['data']);
     } else {
       throw Exception("Failed load home_page.");
     }
