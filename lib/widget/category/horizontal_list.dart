@@ -15,7 +15,7 @@ class _HorizontalListState extends State<HorizontalList> {
   Widget build(BuildContext context) {
     return Container(
       height: 30,
-      margin: EdgeInsets.all(8),
+      margin: EdgeInsets.fromLTRB(8, 6, 8, 6),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: widget.list.length,
@@ -33,7 +33,6 @@ class _HorizontalListState extends State<HorizontalList> {
       onTap: () {
         setState(() {
           widget._currentIndex = index;
-          print(index);
         });
       },
       child: Container(

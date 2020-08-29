@@ -2,16 +2,16 @@ import 'package:balon_movie/model/home_casual.dart';
 import 'package:balon_movie/model/home_recommend_model.dart';
 
 class HomeModel {
-  final List homeCasual;
-  final List guochan;
-  final List jingpin;
-  final List wuma;
-  final List shunv;
-  final List katong;
-  final List lunli;
-  final List zhongwen;
-  final List yazhou;
-  final List oumei;
+  final List<HomeCasual> homeCasual;
+  final List<HomeRecommendModel> guochan;
+  final List<HomeRecommendModel> jingpin;
+  final List<HomeRecommendModel> wuma;
+  final List<HomeRecommendModel> shunv;
+  final List<HomeRecommendModel> katong;
+  final List<HomeRecommendModel> lunli;
+  final List<HomeRecommendModel> zhongwen;
+  final List<HomeRecommendModel> yazhou;
+  final List<HomeRecommendModel> oumei;
 
   HomeModel(
       {this.homeCasual,
@@ -27,35 +27,44 @@ class HomeModel {
 
   factory HomeModel.fromJson(Map<String, dynamic> json) {
     var casualListJson = json["casual"] as List; //轮播图
-    List casualList =
-        casualListJson.map((i) => HomeCasual.fromJson(i)).toList();
+    List<HomeCasual> casualList =
+        casualListJson.map<HomeCasual>((i) => HomeCasual.fromJson(i)).toList();
     var guochanListJson = json["guochan"] as List; //国产
-    List guochanList =
-        guochanListJson.map((i) => HomeRecommendModel.fromJson(i)).toList();
+    List<HomeRecommendModel> guochanList = guochanListJson
+        .map<HomeRecommendModel>((i) => HomeRecommendModel.fromJson(i))
+        .toList();
     var jingpinListJson = json["jingpin"] as List; //精品
-    List jingpinList =
-        jingpinListJson.map((i) => HomeRecommendModel.fromJson(i)).toList();
+    List<HomeRecommendModel> jingpinList = jingpinListJson
+        .map<HomeRecommendModel>((i) => HomeRecommendModel.fromJson(i))
+        .toList();
     var wumaListJson = json["wuma"] as List; //无码
-    List wumaList =
-        wumaListJson.map((i) => HomeRecommendModel.fromJson(i)).toList();
+    List<HomeRecommendModel> wumaList = wumaListJson
+        .map<HomeRecommendModel>((i) => HomeRecommendModel.fromJson(i))
+        .toList();
     var shunvListJson = json["shunv"] as List; //熟女
-    List shunvList =
-        shunvListJson.map((i) => HomeRecommendModel.fromJson(i)).toList();
+    List<HomeRecommendModel> shunvList = shunvListJson
+        .map<HomeRecommendModel>((i) => HomeRecommendModel.fromJson(i))
+        .toList();
     var katongListJson = json["katong"] as List; //卡通
-    List katongList =
-        katongListJson.map((i) => HomeRecommendModel.fromJson(i)).toList();
+    List<HomeRecommendModel> katongList = katongListJson
+        .map<HomeRecommendModel>((i) => HomeRecommendModel.fromJson(i))
+        .toList();
     var lunliListJson = json["lunli"] as List; //伦理
-    List lunliList =
-        lunliListJson.map((i) => HomeRecommendModel.fromJson(i)).toList();
+    List<HomeRecommendModel> lunliList = lunliListJson
+        .map<HomeRecommendModel>((i) => HomeRecommendModel.fromJson(i))
+        .toList();
     var zhongwenListJson = json["zhongwen"] as List; //中文
-    List zhongwenList =
-        zhongwenListJson.map((i) => HomeRecommendModel.fromJson(i)).toList();
+    List<HomeRecommendModel> zhongwenList = zhongwenListJson
+        .map<HomeRecommendModel>((i) => HomeRecommendModel.fromJson(i))
+        .toList();
     var yazhouListJson = json["yazhou"] as List; //亚洲
-    List yazhouList =
-        yazhouListJson.map((i) => HomeRecommendModel.fromJson(i)).toList();
+    List<HomeRecommendModel> yazhouList = yazhouListJson
+        .map<HomeRecommendModel>((i) => HomeRecommendModel.fromJson(i))
+        .toList();
     var oumeiListJson = json["oumei"] as List; //欧美
-    List oumeiList =
-        oumeiListJson.map((i) => HomeRecommendModel.fromJson(i)).toList();
+    List<HomeRecommendModel> oumeiList = oumeiListJson
+        .map<HomeRecommendModel>((i) => HomeRecommendModel.fromJson(i))
+        .toList();
 
     return HomeModel(
       homeCasual: casualList,

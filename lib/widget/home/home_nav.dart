@@ -1,3 +1,4 @@
+import 'package:balon_movie/pages/category_page.dart';
 import 'package:flutter/material.dart';
 
 class HomeNav extends StatefulWidget {
@@ -21,7 +22,14 @@ class _HomeNavState extends State<HomeNav> {
 
   Widget _gridViewItemUI(BuildContext context, item) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        switch (item["type"]) {
+          case "全部分类":
+            Navigator.push(context,
+                new MaterialPageRoute(builder: (context) => CategoryPage()));
+            break;
+        }
+      },
       child: Column(
         children: [
           Image.asset(

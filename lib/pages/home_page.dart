@@ -1,5 +1,7 @@
 import 'package:balon_movie/dao/home_dao.dart';
+import 'package:balon_movie/model/home_casual.dart';
 import 'package:balon_movie/model/home_model.dart';
+import 'package:balon_movie/model/home_recommend_model.dart';
 import 'package:flutter/material.dart';
 import 'package:balon_movie/config/custom_icon.dart';
 import 'package:balon_movie/widget/home/home_swiper.dart';
@@ -19,18 +21,18 @@ class _HomePageState extends State<HomePage>
   @override
   bool get wantKeepAlive => true;
 
-  Future<HomeModel> _future;
+  Future<HomeModel> _future; //keepAlive
   bool isFirstLoad = true; //是否第一次加载，第一次显示loadingView，否则不显示
-  List swiperList = [];
-  List guochanList = [];
-  List jingpinList = [];
-  List wumaList = [];
-  List yazhouList = [];
-  List zhongwenList = [];
-  List hanguoList = [];
-  List katongList = [];
-  List shunvList = [];
-  List oumeiList = [];
+  List<HomeCasual> swiperList = [];
+  List<HomeRecommendModel> guochanList = [];
+  List<HomeRecommendModel> jingpinList = [];
+  List<HomeRecommendModel> wumaList = [];
+  List<HomeRecommendModel> yazhouList = [];
+  List<HomeRecommendModel> zhongwenList = [];
+  List<HomeRecommendModel> hanguoList = [];
+  List<HomeRecommendModel> katongList = [];
+  List<HomeRecommendModel> shunvList = [];
+  List<HomeRecommendModel> oumeiList = [];
 
   Future<Null> _handleRefresh() async {
     await HomeDao.getHomeData().then((value) {
@@ -48,8 +50,6 @@ class _HomePageState extends State<HomePage>
         this.yazhouList = data.yazhou;
         this.oumeiList = data.oumei;
       });
-    }).catchError((e) {
-      throw Exception(e.toString());
     });
   }
 

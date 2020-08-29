@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class HomeRecommend extends StatelessWidget {
   final List list;
   final String title;
+  final bool isShowTitle;
 
-  const HomeRecommend({Key key, @required this.list, this.title})
+  const HomeRecommend(
+      {Key key, @required this.list, this.title, this.isShowTitle = true})
       : super(key: key);
 
   @override
@@ -79,7 +81,10 @@ class HomeRecommend extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   textDirection: TextDirection.ltr,
                   maxLines: 1,
-                  style: TextStyle(fontSize: 14, color: Colors.white70),
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
                 )
               ],
             )));
