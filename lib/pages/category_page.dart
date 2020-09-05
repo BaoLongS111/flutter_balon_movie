@@ -1,8 +1,9 @@
-import 'package:balon_movie/dao/home_dao.dart';
+import 'package:balon_movie/dao/category_dao.dart';
 import 'package:balon_movie/model/home_recommend_model.dart';
 import 'package:balon_movie/widget/category/horizontal_list.dart';
 import 'package:balon_movie/widget/category/type_recommend.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class CategoryPage extends StatefulWidget {
   CategoryPage({Key key}) : super(key: key);
@@ -11,16 +12,17 @@ class CategoryPage extends StatefulWidget {
   _CategoryPageState createState() => _CategoryPageState();
 }
 
-class _CategoryPageState extends State<CategoryPage> {
-  List<HomeRecommendModel> data = [];
+class _CategoryPageState extends State<CategoryPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
 
-  Future<Null> _loadData() async {
-    await HomeDao.getCategoryData().then((value) {
-      setState(() {
-        data = value;
-      });
-    });
-  }
+  List<HomeRecommendModel> data = [];
+  //当前页码
+  int _page = 0;
+  int _pageSize = 20;
+  //是否第一次加载
+  bool isFirstLoad = true;
 
   List type = [
     "全部类型",
@@ -41,7 +43,6 @@ class _CategoryPageState extends State<CategoryPage> {
     "强奸乱伦",
     "制服诱惑"
   ];
-
   List area = ["全部地区", "国产", "日本", "台湾", "韩国", "香港", "欧美"];
   List hd = ["全部清晰度", "标清", "高清"];
   List size = ["全部规格", "长片", "短片"];
@@ -49,13 +50,25 @@ class _CategoryPageState extends State<CategoryPage> {
   List language = ["全部语言", "中文字幕", "国语对白", "其它"];
   List paixu = ["综合排序", "最多好评", "最多播放", "最高评分"];
 
+  Future<Null> _loadMoreData() async {
+    await CategoryDao.loadMoreCategoryData(page: _page, pageSize: _pageSize)
+        .then((value) {
+      setState(() {
+        data.addAll(value);
+        print(data.length);
+        _page += 1;
+      });
+    });
+  }
+
   @override
   void initState() {
-    _loadData();
+    _loadMoreData();
     super.initState();
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -67,16 +80,20 @@ class _CategoryPageState extends State<CategoryPage> {
         ),
         actions: [
           IconButton(
-              icon: Icon(
-                Icons.search,
-                color: Colors.white,
-              ),
+              icon: IconButton(
+                  icon: Image.asset(
+                    "assets/images/global/icon_search.png",
+                    fit: BoxFit.fill,
+                  ),
+                  onPressed: null),
               onPressed: null)
         ],
       ),
       body: Container(
-          height: 2200,
-          decoration: BoxDecoration(color: Colors.black87),
+        height: 2200,
+        decoration: BoxDecoration(color: Colors.black87),
+        child: EasyRefresh(
+          onLoad: _loadMoreData,
           child: ListView(
             children: [
               HorizontalList(list: type),
@@ -88,7 +105,9 @@ class _CategoryPageState extends State<CategoryPage> {
               HorizontalList(list: paixu),
               TypeRecommend(list: data)
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

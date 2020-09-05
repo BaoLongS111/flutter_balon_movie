@@ -15,23 +15,36 @@ class TabNavigator extends StatefulWidget {
 
 class _TabNavigatorState extends State<TabNavigator> {
   //控制器
-  final PageController _controller = PageController(initialPage: 0);
+  PageController _controller;
+  List _pages = [];
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    _controller = PageController(initialPage: 0, keepPage: true);
+    _pages.add(HomePage());
+    _pages.add(CategoryPage());
+    _pages.add(VideoPage());
+    _pages.add(HotPage());
+    _pages.add(ProfilePage());
+    super.initState();
+  }
+
+  void _onPageChanged(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
+      body: PageView.builder(
+        itemBuilder: (context, index) => _pages[index],
+        itemCount: _pages.length,
+        onPageChanged: _onPageChanged,
+        physics: NeverScrollableScrollPhysics(),
         controller: _controller,
-        children: [
-          HomePage(),
-          CategoryPage(),
-          VideoPage(
-              // url: "https://video.jializyw.com:8800/20200726/jta5mLhR/index.m3u8",
-              ),
-          HotPage(),
-          ProfilePage()
-        ],
       ),
       bottomNavigationBar: new Theme(
         data: Theme.of(context).copyWith(
@@ -57,8 +70,8 @@ class _TabNavigatorState extends State<TabNavigator> {
                 icon: Image.asset(
                   "assets/images/tabbar/icon_shouye.png",
                   fit: BoxFit.fill,
-                  width: 22,
-                  height: 22,
+                  width: 24,
+                  height: 24,
                 ),
                 activeIcon: Image.asset(
                   "assets/images/tabbar/icon_shouye_sel.png",

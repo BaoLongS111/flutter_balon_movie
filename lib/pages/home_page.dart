@@ -1,9 +1,9 @@
+import 'package:balon_movie/common/loading_indicator.dart';
 import 'package:balon_movie/dao/home_dao.dart';
 import 'package:balon_movie/model/home_casual.dart';
 import 'package:balon_movie/model/home_model.dart';
 import 'package:balon_movie/model/home_recommend_model.dart';
 import 'package:flutter/material.dart';
-import 'package:balon_movie/config/custom_icon.dart';
 import 'package:balon_movie/widget/home/home_swiper.dart';
 import 'package:balon_movie/widget/home/home_nav.dart';
 import 'package:balon_movie/widget/home/home_recommend.dart';
@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage>
   @override
   bool get wantKeepAlive => true;
 
-  Future<HomeModel> _future; //keepAlive
+  // Future<HomeModel> _future; //keepAlive
   bool isFirstLoad = true; //是否第一次加载，第一次显示loadingView，否则不显示
   List<HomeCasual> swiperList = [];
   List<HomeRecommendModel> guochanList = [];
@@ -53,17 +53,20 @@ class _HomePageState extends State<HomePage>
     });
   }
 
+  //上次刷新时间
+  DateTime lastRefresh;
+
   @override
   void initState() {
     _handleRefresh();
-    _future = HomeDao.getHomeData(); //配合keepAlive使用
+    // _future = HomeDao.getHomeData(); //配合keepAlive使用
     super.initState();
   }
 
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    super.build(context); //配合keepAlive使用
+    // super.build(context); //配合keepAlive使用
     return Container(
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -73,26 +76,17 @@ class _HomePageState extends State<HomePage>
           backgroundColor: Colors.transparent,
           appBar: _appBar,
           body: FutureBuilder<HomeModel>(
-              future: _future,
+              future: HomeDao.getHomeData(),
               builder:
                   (BuildContext context, AsyncSnapshot<HomeModel> snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
                     if (isFirstLoad) {
                       return Center(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircularProgressIndicator(
-                            backgroundColor: Colors.white,
-                          ),
-                          SizedBox(height: 7),
-                          Text(
-                            "加载中...",
-                            style: TextStyle(color: Colors.white, fontSize: 12),
-                          )
-                        ],
-                      ));
+                        child: BallPulseSyncIndicator(
+                          ballColor: Colors.purpleAccent,
+                        ),
+                      );
                     } else {
                       return _listView;
                     }
@@ -131,7 +125,12 @@ class _HomePageState extends State<HomePage>
               borderRadius: BorderRadius.circular(15)),
           child: Row(
             children: [
-              Icon(Icons.search, size: 20, color: Colors.white),
+              Image.asset(
+                "assets/images/global/icon_search.png",
+                fit: BoxFit.fill,
+                height: 14,
+                width: 14,
+              ),
               Expanded(
                   flex: 1,
                   child: TextField(
@@ -146,15 +145,15 @@ class _HomePageState extends State<HomePage>
           )),
       actions: [
         IconButton(
-            icon: Icon(
-              CustomIcon.download,
-              color: Colors.white,
+            icon: Image.asset(
+              "assets/images/home/icon_download.png",
+              fit: BoxFit.fill,
             ),
             onPressed: null),
         IconButton(
-          icon: Icon(
-            CustomIcon.history,
-            color: Colors.white,
+          icon: Image.asset(
+            "assets/images/home/icon_look_record.png",
+            fit: BoxFit.fill,
           ),
           onPressed: null,
         )
@@ -164,18 +163,23 @@ class _HomePageState extends State<HomePage>
 
   Widget get _listView {
     return EasyRefresh(
-        header: ClassicalHeader(
-            bgColor: Colors.black87,
-            textColor: Colors.white,
-            showInfo: true,
-            noMoreText: '没有更多数据',
-            refreshText: "下拉刷新",
-            refreshReadyText: "释放立即刷新",
-            refreshingText: "正在刷新",
-            refreshedText: "刷新成功",
-            infoColor: Colors.white70),
-        onRefresh: _handleRefresh,
-        child: ListView(
+      header: ClassicalHeader(
+          bgColor: Colors.black87,
+          textColor: Colors.white,
+          showInfo: true,
+          noMoreText: '没有更多数据',
+          refreshText: "下拉刷新",
+          refreshReadyText: "释放立即刷新",
+          refreshingText: "正在刷新",
+          refreshedText: "刷新成功",
+          infoText: "上次更新：" +
+              DateTime.now().hour.toString() +
+              ":" +
+              DateTime.now().minute.toString(),
+          infoColor: Colors.white70),
+      onRefresh: _handleRefresh,
+      child: SingleChildScrollView(
+        child: Column(
           children: [
             HomeSwiper(casualList: this.swiperList),
             HomeNav(),
@@ -197,6 +201,8 @@ class _HomePageState extends State<HomePage>
             HomeRecommend(list: this.shunvList, title: "熟女人妻"),
             HomeRecommend(list: this.oumeiList, title: "欧美性爱"),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

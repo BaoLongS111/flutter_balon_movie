@@ -13,7 +13,7 @@ class HomeRecommend extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(8),
-      height: 560,
+      height: 570,
       child: Column(
         children: [
           Row(
@@ -45,7 +45,7 @@ class HomeRecommend extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Container(
-            height: 480,
+            height: 500,
             child: GridView.count(
               crossAxisCount: 2,
               physics: NeverScrollableScrollPhysics(),
@@ -67,9 +67,11 @@ class HomeRecommend extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(5.0),
                   child: AspectRatio(
-                      aspectRatio: 1.48,
+                      aspectRatio: 1.3,
                       child: FadeInImage.assetNetwork(
-                          placeholder: "assets/images/no_banner.png",
+                          placeholder: "assets/images/global/outline.png",
+                          fadeInDuration: const Duration(milliseconds: 300),
+                          fadeOutDuration: const Duration(milliseconds: 100),
                           image: item.vodPic,
                           fit: BoxFit.fill)),
                 ),

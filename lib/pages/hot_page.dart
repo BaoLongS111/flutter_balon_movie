@@ -9,6 +9,11 @@ class HotPage extends StatefulWidget {
 
 class _HotPageState extends State<HotPage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

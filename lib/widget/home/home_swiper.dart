@@ -18,6 +18,8 @@ class HomeSwiper extends StatelessWidget {
               borderRadius: BorderRadius.circular(14),
               child: FadeInImage.assetNetwork(
                   placeholder: "assets/images/no_banner.png",
+                  fadeInDuration: const Duration(milliseconds: 300),
+                  fadeOutDuration: const Duration(milliseconds: 100),
                   image: casualList[index].image,
                   fit: BoxFit.fill),
             );

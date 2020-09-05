@@ -29,7 +29,6 @@ dependencies:
   dio: ^3.0.0
   flutter_swiper: ^1.1.6
   flutter_easyrefresh: ^2.1.5
-  fluro: ^1.6.3
 
 dev_dependencies:
   flutter_test:
@@ -79,10 +78,10 @@ flutter:
   fonts:
     - family: MyIcon
       fonts:
-        - asset: fonts/navbar.ttf
+        - asset: assets/fonts/navbar.ttf
     - family: home_page
       fonts:
-        - asset: fonts/iconfont.ttf
+        - asset: assets/fonts/iconfont.ttf
   assets:
     - assets/images/dragon.png
     - assets/images/home/bg_navbar.png
@@ -108,5 +107,7 @@ flutter:
     - assets/images/home/banner_look.png
     - assets/images/home/box_banner.png
     - assets/images/home/icon_look_record.png
-    - assets/images/home/icon_xz.png
+    - assets/images/home/icon_download.png
+    - assets/images/global/icon_search.png
     - assets/images/no_banner.png
+    - assets/images/global/outline.png

@@ -1,17 +1,20 @@
+import 'package:balon_movie/model/home_recommend_model.dart';
 import 'package:dio/dio.dart';
 
+const CATEGORY_PAGE = "http://212.64.93.42:3000/api/page";
+
 class CategoryDao {
-  static Future<dynamic> switchCategoryData(
-      {String type,
-      String area,
-      String hd,
-      String size,
-      String ma,
-      String language,
-      String paixu}) async {
-    String sql;
-    if (type != "全部类型") {
-      // sql = "select ${type} from mac_vod where area"
+  static Future<List<HomeRecommendModel>> loadMoreCategoryData(
+      {int page, int pageSize}) async {
+    final Response response = await Dio()
+        .post(CATEGORY_PAGE, data: {"page": page, "pageSize": pageSize});
+    if (response.statusCode == 200) {
+      var categoryListJson = response.data["data"] as List;
+      var categoryList =
+          categoryListJson.map((i) => HomeRecommendModel.fromJson(i)).toList();
+      return categoryList;
+    } else {
+      throw Exception("Failed load Category Data.");
     }
   }
 }
