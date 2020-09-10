@@ -35,20 +35,22 @@ class _HomePageState extends State<HomePage>
   List<HomeRecommendModel> oumeiList = [];
 
   Future<Null> _handleRefresh() async {
-    await HomeDao.getHomeData().then((value) {
-      setState(() {
-        var data = value;
-        isFirstLoad = false;
-        this.swiperList = data.homeCasual;
-        this.guochanList = data.guochan;
-        this.jingpinList = data.jingpin;
-        this.wumaList = data.wuma;
-        this.shunvList = data.shunv;
-        this.katongList = data.katong;
-        this.hanguoList = data.lunli;
-        this.zhongwenList = data.zhongwen;
-        this.yazhouList = data.yazhou;
-        this.oumeiList = data.oumei;
+    await Future.delayed(Duration(seconds: 2), () {
+      HomeDao.getHomeData().then((value) {
+        setState(() {
+          var data = value;
+          isFirstLoad = false;
+          this.swiperList = data.homeCasual;
+          this.guochanList = data.guochan;
+          this.jingpinList = data.jingpin;
+          this.wumaList = data.wuma;
+          this.shunvList = data.shunv;
+          this.katongList = data.katong;
+          this.hanguoList = data.lunli;
+          this.zhongwenList = data.zhongwen;
+          this.yazhouList = data.yazhou;
+          this.oumeiList = data.oumei;
+        });
       });
     });
   }

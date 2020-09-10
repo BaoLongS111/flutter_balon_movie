@@ -14,7 +14,7 @@ class HomeSwiper extends StatelessWidget {
           autoplay: true,
           key: UniqueKey(),
           itemBuilder: (BuildContext context, int index) {
-            return new ClipRRect(
+            return ClipRRect(
               borderRadius: BorderRadius.circular(14),
               child: FadeInImage.assetNetwork(
                   placeholder: "assets/images/no_banner.png",

@@ -19,7 +19,7 @@ class _CategoryPageState extends State<CategoryPage>
 
   List<HomeRecommendModel> data = [];
   //当前页码
-  int _page = 0;
+  int _page = 1;
   int _pageSize = 20;
   //是否第一次加载
   bool isFirstLoad = true;
@@ -51,12 +51,13 @@ class _CategoryPageState extends State<CategoryPage>
   List paixu = ["综合排序", "最多好评", "最多播放", "最高评分"];
 
   Future<Null> _loadMoreData() async {
-    await CategoryDao.loadMoreCategoryData(page: _page, pageSize: _pageSize)
-        .then((value) {
-      setState(() {
-        data.addAll(value);
-        print(data.length);
-        _page += 1;
+    await Future.delayed(Duration(seconds: 1), () {
+      CategoryDao.loadMoreCategoryData(page: _page, pageSize: _pageSize)
+          .then((value) {
+        setState(() {
+          data.addAll(value);
+          _page += 1;
+        });
       });
     });
   }
@@ -94,15 +95,45 @@ class _CategoryPageState extends State<CategoryPage>
         decoration: BoxDecoration(color: Colors.black87),
         child: EasyRefresh(
           onLoad: _loadMoreData,
+          footer: ClassicalFooter(
+              bgColor: Colors.black87,
+              textColor: Colors.white,
+              showInfo: false,
+              loadText: "上拉加载更多",
+              noMoreText: '我是有底线的TAT',
+              loadingText: "全力加载中...",
+              loadFailedText: "网络出了点小差...",
+              loadedText: "加载完成"),
           child: ListView(
             children: [
-              HorizontalList(list: type),
-              HorizontalList(list: area),
-              HorizontalList(list: hd),
-              HorizontalList(list: size),
-              HorizontalList(list: ma),
-              HorizontalList(list: language),
-              HorizontalList(list: paixu),
+              HorizontalList(
+                list: type,
+                type_text: "类型",
+              ),
+              HorizontalList(
+                list: area,
+                type_text: "地区",
+              ),
+              HorizontalList(
+                list: hd,
+                type_text: "清晰度",
+              ),
+              HorizontalList(
+                list: size,
+                type_text: "长度",
+              ),
+              HorizontalList(
+                list: ma,
+                type_text: "有码",
+              ),
+              HorizontalList(
+                list: language,
+                type_text: "语言",
+              ),
+              HorizontalList(
+                list: paixu,
+                type_text: "排序",
+              ),
               TypeRecommend(list: data)
             ],
           ),
