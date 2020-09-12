@@ -30,6 +30,7 @@ dependencies:
   flutter_swiper: ^1.1.6
   flutter_easyrefresh: ^2.1.5
   provider: ^4.3.2
+  fijkplayer: ^0.8.7
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,4 @@
+import 'package:balon_movie/pages/detail_page.dart';
 import 'package:flutter/material.dart';
 
 class HomeRecommend extends StatelessWidget {
@@ -59,7 +60,12 @@ class HomeRecommend extends StatelessWidget {
 
   Widget _gridViewItemUI(BuildContext context, item) {
     return GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context,
+              new MaterialPageRoute(
+                  builder: (context) => DetailPage(model: item)));
+        },
         child: Padding(
             padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
             child: Column(
