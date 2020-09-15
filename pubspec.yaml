@@ -31,6 +31,8 @@ dependencies:
   flutter_easyrefresh: ^2.1.5
   provider: ^4.3.2
   fijkplayer: ^0.8.7
+  flutter_screenutil: ^2.3.1
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:
@@ -85,6 +87,17 @@ flutter:
       fonts:
         - asset: assets/fonts/iconfont.ttf
   assets:
+    - assets/images/detail/icon_xz.png
+    - assets/images/detail/icon_fx.png
+    - assets/images/detail/icon_sc_1.png
+    - assets/images/detail/icon_sc.png
+    - assets/images/detail/icon_dz_1.png
+    - assets/images/detail/icon_dz.png
+    - assets/images/detail/icon_cai_1.png
+    - assets/images/detail/icon_cai.png
+    - assets/images/detail/icon_pf.png
+    - assets/images/detail/icon_gxsj.png
+    - assets/images/detail/icon_play_num.png
     - assets/images/dragon.png
     - assets/images/home/bg_navbar.png
     - assets/images/home/bg_login.png

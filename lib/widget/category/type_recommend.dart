@@ -1,4 +1,4 @@
-import 'package:balon_movie/common/loading_indicator.dart';
+import 'package:balon_movie/common/loading/loading_indicator.dart';
 import 'package:balon_movie/model/home_recommend_model.dart';
 import 'package:flutter/material.dart';
 

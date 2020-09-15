@@ -1,4 +1,5 @@
 import 'package:balon_movie/provider/category_provider.dart';
+import 'package:balon_movie/provider/video_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:balon_movie/navigator/tab_navigator.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => CategoryProvider()),
+        ChangeNotifierProvider(create: (context) => VideoProvider()),
       ],
       child: MaterialApp(
         title: "暴龙视频",

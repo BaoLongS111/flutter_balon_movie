@@ -9,8 +9,8 @@ class HomeRecommendModel {
   final int vodHits;
   final int hitsWeek;
   final int hitsMonth;
-  final int vodUp;
-  final int vodDown;
+  int vodUp;
+  int vodDown;
   final int vodScore;
   final int vodScoreAll;
   final int vodScoreNum;

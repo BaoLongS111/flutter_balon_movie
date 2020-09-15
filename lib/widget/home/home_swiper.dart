@@ -1,16 +1,21 @@
+import 'package:balon_movie/common/utils/screen_adaper.dart';
 import 'package:balon_movie/model/home_casual.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomeSwiper extends StatelessWidget {
+  //ScrollNotificationInterceptor
   final List<HomeCasual> casualList;
   const HomeSwiper({Key key, @required this.casualList}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 200,
-        padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
-        child: new Swiper(
+      height: ScreenAdaper.setHeight(500),
+      padding: EdgeInsets.fromLTRB(0, ScreenAdaper.setHeight(20), 0, 0),
+      child: ScrollNotificationInterceptor(
+        //easyRefresh 用来阻止滑动冲突的组件
+        child: Swiper(
           autoplay: true,
           key: UniqueKey(),
           itemBuilder: (BuildContext context, int index) {
@@ -34,6 +39,8 @@ class HomeSwiper extends StatelessWidget {
                   color: Colors.grey, //点点的颜色
                   activeColor: Colors.white),
               alignment: Alignment.bottomCenter),
-        ));
+        ),
+      ),
+    );
   }
 }

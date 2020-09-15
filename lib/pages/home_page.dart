@@ -1,4 +1,6 @@
-import 'package:balon_movie/common/loading_indicator.dart';
+import 'dart:async';
+import 'package:balon_movie/common/loading/loading_indicator.dart';
+import 'package:balon_movie/common/utils/screen_adaper.dart';
 import 'package:balon_movie/dao/home_dao.dart';
 import 'package:balon_movie/model/home_casual.dart';
 import 'package:balon_movie/model/home_model.dart';
@@ -57,7 +59,6 @@ class _HomePageState extends State<HomePage>
 
   //上次刷新时间
   DateTime lastRefresh;
-
   @override
   void initState() {
     _handleRefresh();
@@ -66,9 +67,9 @@ class _HomePageState extends State<HomePage>
   }
 
   @override
-  // ignore: must_call_super
   Widget build(BuildContext context) {
-    // super.build(context); //配合keepAlive使用
+    ScreenAdaper.init(context); //初始化屏幕比例
+    super.build(context); //配合keepAlive使用
     return Container(
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -115,36 +116,56 @@ class _HomePageState extends State<HomePage>
           icon: Image.asset(
             'assets/images/dragon.png',
             fit: BoxFit.fill,
-            height: 45,
-            width: 45,
+            height: ScreenAdaper.setWidth(120),
+            width: ScreenAdaper.setWidth(120),
           ),
           onPressed: null),
       title: Container(
-          height: 30,
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-          decoration: BoxDecoration(
-              color: Color(0x33bdc3c7),
-              borderRadius: BorderRadius.circular(15)),
-          child: Row(
-            children: [
-              Image.asset(
-                "assets/images/global/icon_search.png",
-                fit: BoxFit.fill,
-                height: 14,
-                width: 14,
+        height: ScreenAdaper.setHeight(80),
+        padding: EdgeInsets.fromLTRB(
+            ScreenAdaper.setHeight(30), 0, ScreenAdaper.setHeight(30), 0),
+        decoration: BoxDecoration(
+            color: Color(0x33bdc3c7), borderRadius: BorderRadius.circular(15)),
+        child: TextField(
+          autofocus: false,
+          minLines: 1,
+          enableInteractiveSelection: false,
+          textAlign: TextAlign.left,
+          decoration: InputDecoration(
+            prefixIcon: IconButton(
+                icon: Image.asset(
+                  "assets/images/global/icon_search.png",
+                  fit: BoxFit.fill,
+                ),
+                onPressed: null),
+            contentPadding: EdgeInsets.all(0),
+            alignLabelWithHint: true,
+            //enableBorder 和focusedBorder是为了hintText和icon居中对齐
+            enabledBorder: OutlineInputBorder(
+              /*边角*/
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(
+                color: Colors.transparent, //边线颜色为透明
+                width: 1, //边线宽度为2
               ),
-              Expanded(
-                  flex: 1,
-                  child: TextField(
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.fromLTRB(5, 0, 5, 11),
-                        border: InputBorder.none,
-                        hintText: "小泽玛利亚",
-                        hintStyle:
-                            TextStyle(fontSize: 15, color: Colors.white70)),
-                  ))
-            ],
-          )),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.transparent, //边框颜色为透明
+                width: 1, //宽度为5
+              ),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            border: InputBorder.none,
+            hintText: "小泽玛利亚",
+            hintStyle: TextStyle(
+              fontSize: ScreenAdaper.setSp(38),
+              color: Colors.white70,
+              textBaseline: TextBaseline.alphabetic,
+            ),
+          ),
+        ),
+      ),
       actions: [
         IconButton(
             icon: Image.asset(
@@ -188,14 +209,24 @@ class _HomePageState extends State<HomePage>
             HomeRecommend(list: this.jingpinList, title: "精品推荐"),
             HomeRecommend(list: this.guochanList, title: "国产情色"),
             Padding(
-              padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+              padding: EdgeInsets.fromLTRB(
+                ScreenAdaper.setHeight(20),
+                ScreenAdaper.setHeight(8),
+                ScreenAdaper.setHeight(20),
+                ScreenAdaper.setHeight(20),
+              ),
               child: Image.asset("assets/images/home/banner_look.png"),
             ),
             HomeRecommend(list: this.wumaList, title: "无码专区"),
             HomeRecommend(list: this.yazhouList, title: "亚洲有码"),
             HomeRecommend(list: this.zhongwenList, title: "中文字幕"),
             Padding(
-              padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+              padding: EdgeInsets.fromLTRB(
+                ScreenAdaper.setHeight(20),
+                ScreenAdaper.setHeight(8),
+                ScreenAdaper.setHeight(20),
+                ScreenAdaper.setHeight(20),
+              ),
               child: Image.asset("assets/images/home/box_banner.png"),
             ),
             HomeRecommend(list: this.hanguoList, title: "经典伦理"),

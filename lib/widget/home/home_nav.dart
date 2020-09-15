@@ -1,3 +1,4 @@
+import 'package:balon_movie/common/utils/screen_adaper.dart';
 import 'package:balon_movie/pages/category_page.dart';
 import 'package:flutter/material.dart';
 
@@ -35,12 +36,13 @@ class _HomeNavState extends State<HomeNav> {
           Image.asset(
             item["path"],
             fit: BoxFit.fill,
-            width: 37,
-            height: 37,
+            width: ScreenAdaper.setWidth(120),
+            height: ScreenAdaper.setWidth(120),
           ),
           Text(
             item["type"],
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(
+                color: Colors.white70, fontSize: ScreenAdaper.setSp(35)),
           )
         ],
       ),
@@ -50,12 +52,18 @@ class _HomeNavState extends State<HomeNav> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 180,
-      padding: EdgeInsets.fromLTRB(5, 12, 5, 12),
+      height: ScreenAdaper.setHeight(480),
+      margin: EdgeInsets.only(top: ScreenAdaper.setWidth(20)),
+      padding: EdgeInsets.fromLTRB(
+        ScreenAdaper.setWidth(5),
+        ScreenAdaper.setHeight(20),
+        ScreenAdaper.setWidth(5),
+        ScreenAdaper.setHeight(6),
+      ),
       child: GridView.count(
           physics: NeverScrollableScrollPhysics(), //去除滚动
           crossAxisCount: 4,
-          padding: EdgeInsets.all(3.0),
+          padding: EdgeInsets.all(ScreenAdaper.setHeight(2)),
           children: navList.map((i) => _gridViewItemUI(context, i)).toList()),
     );
   }
