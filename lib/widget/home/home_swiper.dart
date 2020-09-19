@@ -11,7 +11,7 @@ class HomeSwiper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenAdaper.setHeight(500),
+      height: ScreenAdaper.setWidth(500),
       padding: EdgeInsets.fromLTRB(0, ScreenAdaper.setHeight(20), 0, 0),
       child: ScrollNotificationInterceptor(
         //easyRefresh 用来阻止滑动冲突的组件

@@ -64,13 +64,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.0"
-  fijkplayer:
-    dependency: "direct main"
-    description:
-      name: fijkplayer
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.8.7"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -83,6 +76,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.5"
+  flutter_forbidshot:
+    dependency: "direct main"
+    description:
+      name: flutter_forbidshot
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.2"
   flutter_page_indicator:
     dependency: transitive
     description:
@@ -104,6 +104,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.6"
+  flutter_tencentplayer:
+    dependency: "direct main"
+    description:
+      name: flutter_tencentplayer
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.10.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -158,6 +165,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.3.2+2"
+  screen:
+    dependency: "direct main"
+    description:
+      name: screen
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.5"
   sky_engine:
     dependency: transitive
     description: flutter

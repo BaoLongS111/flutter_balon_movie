@@ -30,9 +30,11 @@ dependencies:
   flutter_swiper: ^1.1.6
   flutter_easyrefresh: ^2.1.5
   provider: ^4.3.2
-  fijkplayer: ^0.8.7
   flutter_screenutil: ^2.3.1
   intl: ^0.16.1
+  flutter_tencentplayer: ^0.10.0
+  screen: 0.0.5
+  flutter_forbidshot: 0.0.2
 
 dev_dependencies:
   flutter_test:
@@ -126,3 +128,13 @@ flutter:
     - assets/images/global/icon_search.png
     - assets/images/no_banner.png
     - assets/images/global/outline.png
+    - assets/images/tencentplayer/full_screen_on.png
+    - assets/images/tencentplayer/icon_back.png
+    - assets/images/tencentplayer/place_nodata.png
+    - assets/images/tencentplayer/player_lock.png
+    - assets/images/tencentplayer/player_pause.png
+    - assets/images/tencentplayer/player_play.png
+    - assets/images/tencentplayer/player_progress_img.png
+    - assets/images/tencentplayer/player_rotate.png
+    - assets/images/tencentplayer/player_unlock.png
+    - assets/images/tencentplayer/video_loading.png

@@ -86,9 +86,11 @@ class HomeRecommend extends StatelessWidget {
       onTap: () {
         Provider.of<VideoProvider>(context, listen: false).updateModel(item);
         Navigator.push(
-            context,
-            new MaterialPageRoute(
-                builder: (context) => DetailPage(model: item)));
+          context,
+          new MaterialPageRoute(
+            builder: (context) => DetailPage(model: item),
+          ),
+        );
       },
       child: Container(
         height: ScreenAdaper.setHeight(300),
@@ -106,46 +108,26 @@ class HomeRecommend extends StatelessWidget {
               child: Container(
                 height: ScreenAdaper.setHeight(300),
                 width: ScreenAdaper.setWidth(500),
-                decoration: ShapeDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(item.vodPic),
-                    fit: BoxFit.fill,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadiusDirectional.circular(
-                      ScreenAdaper.setHeight(12.0),
+                child: ClipRRect(
+                  borderRadius:
+                      BorderRadius.circular(ScreenAdaper.setHeight(15)),
+                  child: AspectRatio(
+                    aspectRatio: 1.3,
+                    child: FadeInImage.assetNetwork(
+                      key: UniqueKey(),
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return Image.asset("assets/images/no_banner.png");
+                      },
+                      placeholder: "assets/images/global/outline.png",
+                      fadeInDuration: const Duration(milliseconds: 300),
+                      fadeOutDuration: const Duration(milliseconds: 100),
+                      image: item.vodPic,
+                      fit: BoxFit.fill,
                     ),
                   ),
-                ),
-                child: Align(
-                  child: Padding(
-                    padding: EdgeInsets.all(ScreenAdaper.setHeight(8.0)),
-                    child: Text(
-                      "",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  alignment: Alignment.bottomCenter,
                 ),
               ),
             ),
-            // ClipRRect(
-            //   borderRadius: BorderRadius.circular(ScreenAdaper.setHeight(15)),
-            //   child: AspectRatio(
-            //     aspectRatio: 1.3,
-            //     child: FadeInImage.assetNetwork(
-            //         key: UniqueKey(),
-            //         imageErrorBuilder: (context, error, stackTrace) {
-            //           return Image.asset("assets/images/no_banner.png");
-            //         },
-            //         placeholder: "assets/images/global/outline.png",
-            //         fadeInDuration: const Duration(milliseconds: 300),
-            //         fadeOutDuration: const Duration(milliseconds: 100),
-            //         image: item.vodPic,
-            //         fit: BoxFit.fill),
-            //   ),
-            // ),
-
             SizedBox(height: ScreenAdaper.setHeight(10)),
             Text(
               item.vodName,

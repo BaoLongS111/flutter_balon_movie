@@ -139,11 +139,13 @@ class _HomePageState extends State<HomePage>
                 ),
                 onPressed: null),
             contentPadding: EdgeInsets.all(0),
-            alignLabelWithHint: true,
+
             //enableBorder 和focusedBorder是为了hintText和icon居中对齐
             enabledBorder: OutlineInputBorder(
               /*边角*/
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(
+                ScreenAdaper.setWidth(30),
+              ),
               borderSide: BorderSide(
                 color: Colors.transparent, //边线颜色为透明
                 width: 1, //边线宽度为2
@@ -154,12 +156,14 @@ class _HomePageState extends State<HomePage>
                 color: Colors.transparent, //边框颜色为透明
                 width: 1, //宽度为5
               ),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(
+                ScreenAdaper.setWidth(30),
+              ),
             ),
             border: InputBorder.none,
             hintText: "小泽玛利亚",
             hintStyle: TextStyle(
-              fontSize: ScreenAdaper.setSp(38),
+              fontSize: ScreenAdaper.setSp(38, allowFontScalingSelf: false),
               color: Colors.white70,
               textBaseline: TextBaseline.alphabetic,
             ),
