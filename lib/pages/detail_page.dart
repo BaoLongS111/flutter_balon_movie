@@ -1,42 +1,20 @@
-import 'dart:async';
 import 'package:balon_movie/common/utils/date_format.dart';
 import 'package:balon_movie/common/utils/screen_adaper.dart';
 import 'package:balon_movie/model/home_recommend_model.dart';
 import 'package:balon_movie/widget/detail/detail_tag.dart';
 import 'package:balon_movie/widget/detail/detail_widget.dart';
-import 'package:balon_movie/widget/tencent_player/tencent_player_bottom_widget.dart';
-import 'package:balon_movie/widget/tencent_player/tencent_player_gesture_cover.dart';
-import 'package:balon_movie/widget/tencent_player/tencent_player_loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_tencentplayer/flutter_tencentplayer.dart';
+import 'package:chewie/chewie.dart';
+import 'package:video_player/video_player.dart';
 
-enum PlayType {
-  network,
-  asset,
-  file,
-  fileId,
-}
-
-// ignore: must_be_immutable
 class DetailPage extends StatefulWidget {
   final HomeRecommendModel model;
-  PlayType playType;
-  String dataSource;
 
-  //UI
-  bool showBottomWidget;
-  bool showClearBtn;
-
-  DetailPage(
-      {Key key,
-      @required this.model,
-      this.showBottomWidget = true,
-      this.showClearBtn = true,
-      this.dataSource,
-      this.playType = PlayType.network})
-      : super(key: key);
+  DetailPage({
+    Key key,
+    @required this.model,
+  }) : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -46,115 +24,60 @@ class _DetailPageState extends State<DetailPage>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+
+  VideoPlayerController videoPlayerController;
+  ChewieController chewieController;
+
   List tagList; //标签
-  TencentPlayerController controller;
-  VoidCallback listener;
-  DeviceOrientation deviceOrientation;
-
-  bool isLock = false;
-  bool showCover = false;
-  Timer timer;
-
-  _DetailPageState() {
-    listener = () {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    };
-  }
+  String url; //视频路径
 
   @override
   void initState() {
     super.initState();
-
-    widget.dataSource = widget.model.vodPlayUrl.replaceAll("第一集\$", "");
+    url = widget.model.vodPlayUrl.replaceAll("第一集\$", "");
+    //控制器初始化
+    _initController();
     if (widget.model.vodTag == "") {
       tagList = [];
     } else {
       tagList = widget.model.vodTag.trim().split(",");
     }
-
-    // SystemChrome.setEnabledSystemUIOverlays([]); //隐藏状态栏
-    _initController();
-    controller.initialize();
-    controller.addListener(listener);
-    hideCover();
-    //ForbidShotUtil.initForbid(context); //阻止ios和android捕获和录制屏幕
-    // Screen.keepOn(true);
   }
 
   @override
-  // ignore: missing_return
-  Future dispose() {
-    controller.removeListener(listener);
-    controller.dispose();
+  void dispose() {
+    videoPlayerController.dispose();
+    chewieController.dispose();
     super.dispose();
   }
 
-  _initController() {
-    switch (widget.playType) {
-      case PlayType.network:
-        controller = TencentPlayerController.network(widget.dataSource);
-        break;
-      case PlayType.asset:
-        controller = TencentPlayerController.asset(widget.dataSource);
-        break;
-      case PlayType.file:
-        controller = TencentPlayerController.file(widget.dataSource);
-        break;
-      case PlayType.fileId:
-        controller = TencentPlayerController.network(null,
-            playerConfig: PlayerConfig(
-                auth: {"appId": 1252463788, "fileId": widget.dataSource}));
-        break;
-    }
-  }
-
-  hideCover() {
-    if (!mounted) return;
-    setState(() {
-      showCover = !showCover;
-    });
-    delayHideCover();
-  }
-
-  delayHideCover() {
-    if (timer != null) {
-      timer.cancel();
-      timer = null;
-    }
-    if (showCover) {
-      timer = new Timer(Duration(seconds: 3), () {
-        if (!mounted) return;
-        setState(() {
-          showCover = false;
-        });
-      });
-    }
-  }
-
-  List<String> clearUrlList = [
-    'http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/e1ab85305285890781763144364/v.f10.mp4',
-    'http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/e1ab85305285890781763144364/v.f20.mp4',
-    'http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/e1ab85305285890781763144364/v.f30.mp4',
-  ];
-
-  changeClear(int urlIndex, {int startTime}) {
-    controller?.removeListener(listener);
-    controller?.pause();
-    controller = TencentPlayerController.network(clearUrlList[urlIndex],
-        playerConfig: PlayerConfig(
-            startTime: startTime ?? controller.value.position.inSeconds));
-    controller?.initialize()?.then((_) {
-      if (mounted) setState(() {});
-    });
-    controller?.addListener(listener);
+  void _initController() {
+    videoPlayerController = VideoPlayerController.network(url);
+    chewieController = ChewieController(
+      videoPlayerController: videoPlayerController,
+      aspectRatio: 16 / 9,
+      autoPlay: true,
+      looping: false,
+      showControls: true,
+      placeholder: new Container(
+        color: Colors.grey,
+      ),
+      // 是否在 UI 构建的时候就加载视频
+      autoInitialize: false,
+      // 拖动条样式颜色
+      materialProgressColors: new ChewieProgressColors(
+        playedColor: Colors.red,
+        handleColor: Colors.blue,
+        backgroundColor: Colors.grey,
+        bufferedColor: Colors.lightGreen,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    ScreenAdaper.init(context);
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -166,139 +89,9 @@ class _DetailPageState extends State<DetailPage>
         backgroundColor: Colors.transparent,
         body: Column(
           children: [
-            GestureDetector(
-              behavior: HitTestBehavior.opaque, //阻挡下一层元素获得事件
-              onTap: () {
-                hideCover();
-              },
-              onDoubleTap: () {
-                if (!widget.showBottomWidget || isLock) return;
-                if (controller.value.isPlaying) {
-                  controller.pause();
-                } else {
-                  controller.play();
-                }
-              },
-              child: Container(
-                color: Colors.black,
-                height: ScreenAdaper.setHeight(510),
-                child: Stack(
-                  overflow: Overflow.visible,
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    /// 视频
-                    controller.value.initialized
-                        ? AspectRatio(
-                            aspectRatio: controller.value.aspectRatio,
-                            child: TencentPlayer(controller),
-                          )
-                        : Image.asset(
-                            'assets/images/tencentplayer/place_nodata.png'),
-
-                    /// 支撑全屏
-                    Container(),
-
-                    /// 半透明浮层
-                    showCover
-                        ? Container(color: Colors.transparent)
-                        : SizedBox(),
-
-                    /// 处理滑动手势
-                    Offstage(
-                      offstage: isLock,
-                      child: TencentPlayerGestureCover(
-                        controller: controller,
-                        showBottomWidget: widget.showBottomWidget,
-                        behavingCallBack: delayHideCover,
-                      ),
-                    ),
-
-                    /// 加载loading
-                    TencentPlayerLoading(
-                      controller: controller,
-                      iconW: ScreenAdaper.setWidth(153),
-                    ),
-
-                    /// 头部浮层
-                    !isLock && showCover
-                        ? Positioned(
-                            top: 0,
-                            left: ScreenAdaper.setWidth(8),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                  top: ScreenAdaper.setHeight(100),
-                                  left: ScreenAdaper.setWidth(12),
-                                ),
-                                child: Image.asset(
-                                  'assets/images/tencentplayer/icon_back.png',
-                                  width: ScreenAdaper.setWidth(64),
-                                  height: ScreenAdaper.setWidth(64),
-                                  fit: BoxFit.contain,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          )
-                        : SizedBox(),
-
-                    /// 锁
-                    showCover
-                        ? Align(
-                            alignment: Alignment.centerLeft,
-                            child: GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {
-                                setState(() {
-                                  isLock = !isLock;
-                                });
-                                delayHideCover();
-                              },
-                              child: Container(
-                                color: Colors.transparent,
-                                padding: EdgeInsets.only(
-                                  top: MediaQuery.of(context).padding.top,
-                                  right: ScreenAdaper.setWidth(20),
-                                  bottom: ScreenAdaper.setHeight(20),
-                                  left: 0,
-                                ),
-                                child: Image.asset(
-                                  isLock
-                                      ? 'assets/images/tencentplayer/player_lock.png'
-                                      : 'assets/images/tencentplayer/player_unlock.png',
-                                  width: ScreenAdaper.setWidth(88),
-                                  height: ScreenAdaper.setWidth(88),
-                                ),
-                              ),
-                            ),
-                          )
-                        : SizedBox(),
-
-                    /// 进度、清晰度、速度
-                    Offstage(
-                      offstage: !widget.showBottomWidget,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).padding.top,
-                            right: MediaQuery.of(context).padding.bottom),
-                        child: TencentPlayerBottomWidget(
-                          isShow: !isLock && showCover,
-                          controller: controller,
-                          showClearBtn: widget.showClearBtn,
-                          behavingCallBack: () {
-                            delayHideCover();
-                          },
-                          changeClear: (int index) {
-                            changeClear(index);
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+            Container(
+              child: Chewie(
+                controller: chewieController,
               ),
             ),
             Expanded(
@@ -332,7 +125,10 @@ class _DetailPageState extends State<DetailPage>
                         maxLines: 3,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: ScreenAdaper.setSp(46),
+                          fontSize: ScreenAdaper.setSp(
+                            46,
+                            allowFontScalingSelf: false,
+                          ),
                         ),
                       ),
                     ),

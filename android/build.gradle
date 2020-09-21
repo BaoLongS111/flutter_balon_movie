@@ -11,23 +11,12 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
-// flutter_tencentplayer的依赖
-def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
-def plugins = new Properties()
-def pluginsFile = new File(flutterProjectRoot.toFile(), '.flutter-plugins')
-if (pluginsFile.exists()) {
-    pluginsFile.withReader('UTF-8') { reader -> plugins.load(reader) }
-}
 
 allprojects {
     repositories {
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' } 
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
-        // flutter_tencentplayer的依赖
-        flatDir {
-            dirs "${plugins.get("flutter_tencentplayer")}android/libs"
-        }
     }
 }
 
