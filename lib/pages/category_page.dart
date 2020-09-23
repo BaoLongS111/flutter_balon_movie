@@ -64,14 +64,15 @@ class _CategoryPageState extends State<CategoryPage>
 
   @override
   void initState() {
-    _loadMoreData();
     super.initState();
+    _loadMoreData();
   }
 
   @override
-  // ignore: must_call_super
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
+      backgroundColor: Colors.black87,
       appBar: AppBar(
         backgroundColor: Colors.black87,
         centerTitle: true,
@@ -90,9 +91,8 @@ class _CategoryPageState extends State<CategoryPage>
               onPressed: null)
         ],
       ),
-      body: Container(
-        height: 2200,
-        decoration: BoxDecoration(color: Colors.black87),
+      body: Padding(
+        padding: EdgeInsets.zero,
         child: EasyRefresh(
           onLoad: _loadMoreData,
           footer: ClassicalFooter(

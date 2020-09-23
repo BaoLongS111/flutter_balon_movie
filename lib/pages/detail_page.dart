@@ -1,19 +1,18 @@
 import 'package:balon_movie/common/utils/date_format.dart';
 import 'package:balon_movie/common/utils/screen_adaper.dart';
 import 'package:balon_movie/model/home_recommend_model.dart';
+import 'package:balon_movie/provider/video_provider.dart';
 import 'package:balon_movie/widget/detail/detail_tag.dart';
 import 'package:balon_movie/widget/detail/detail_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chewie/chewie.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class DetailPage extends StatefulWidget {
-  final HomeRecommendModel model;
-
   DetailPage({
     Key key,
-    @required this.model,
   }) : super(key: key);
 
   @override
@@ -25,22 +24,27 @@ class _DetailPageState extends State<DetailPage>
   @override
   bool get wantKeepAlive => true;
 
+  HomeRecommendModel model;
   VideoPlayerController videoPlayerController;
   ChewieController chewieController;
 
   List tagList; //标签
   String url; //视频路径
 
+  final lightColor = Color.fromRGBO(255, 255, 255, 0.85);
+  final darkColor = Color.fromRGBO(1, 1, 1, 0.35);
+
   @override
   void initState() {
     super.initState();
-    url = widget.model.vodPlayUrl.replaceAll("第一集\$", "");
+    model = Provider.of<VideoProvider>(context, listen: false).getModel();
+    url = model.vodPlayUrl.replaceAll("第一集\$", "");
     //控制器初始化
     _initController();
-    if (widget.model.vodTag == "") {
+    if (model.vodTag == "") {
       tagList = [];
     } else {
-      tagList = widget.model.vodTag.trim().split(",");
+      tagList = model.vodTag.trim().split(",");
     }
   }
 
@@ -59,17 +63,17 @@ class _DetailPageState extends State<DetailPage>
       autoPlay: true,
       looping: false,
       showControls: true,
-      placeholder: new Container(
-        color: Colors.grey,
+      placeholder: Container(
+        color: Colors.black,
       ),
       // 是否在 UI 构建的时候就加载视频
-      autoInitialize: false,
+      autoInitialize: true,
       // 拖动条样式颜色
-      materialProgressColors: new ChewieProgressColors(
-        playedColor: Colors.red,
-        handleColor: Colors.blue,
-        backgroundColor: Colors.grey,
-        bufferedColor: Colors.lightGreen,
+      materialProgressColors: ChewieProgressColors(
+        playedColor: lightColor,
+        handleColor: lightColor,
+        bufferedColor: Colors.white30,
+        backgroundColor: darkColor,
       ),
     );
   }
@@ -117,7 +121,7 @@ class _DetailPageState extends State<DetailPage>
                         ScreenAdaper.setHeight(24),
                       ),
                       child: Text(
-                        widget.model.vodName,
+                        model.vodName,
                         softWrap: true,
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
@@ -154,7 +158,7 @@ class _DetailPageState extends State<DetailPage>
                             width: ScreenAdaper.setWidth(5),
                           ),
                           Text(
-                            widget.model.vodScore.toString(),
+                            model.vodScore.toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: ScreenAdaper.setSp(35),
@@ -174,7 +178,7 @@ class _DetailPageState extends State<DetailPage>
                           ),
                           Text(
                             DateUtils.instance.getFormartData(
-                                timeSamp: widget.model.vodTimeAdd,
+                                timeSamp: model.vodTimeAdd,
                                 format: "yyyy-MM-dd"),
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -194,7 +198,7 @@ class _DetailPageState extends State<DetailPage>
                             width: ScreenAdaper.setWidth(10),
                           ),
                           Text(
-                            widget.model.vodHits.toString(),
+                            model.vodHits.toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: ScreenAdaper.setSp(35),

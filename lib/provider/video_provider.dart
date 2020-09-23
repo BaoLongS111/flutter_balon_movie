@@ -8,4 +8,8 @@ class VideoProvider extends ChangeNotifier {
     this.homeModel = model;
     notifyListeners();
   }
+
+  HomeRecommendModel getModel() {
+    return this.homeModel != null ? this.homeModel : null;
+  }
 }

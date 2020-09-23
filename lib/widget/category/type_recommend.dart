@@ -1,6 +1,10 @@
 import 'package:balon_movie/common/loading/loading_indicator.dart';
-import 'package:balon_movie/model/home_recommend_model.dart';
+import 'package:balon_movie/provider/video_provider.dart';
+import 'package:balon_movie/routers/application.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TypeRecommend extends StatelessWidget {
   final List list;
@@ -29,59 +33,23 @@ class TypeRecommend extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(3, 5, 3, 5),
-      child: _warpList(),
+      child: _warpList(context),
     );
   }
 
-  Widget _girdItemUI(HomeRecommendModel item) {
-    return InkWell(
-      onTap: () {},
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(5, 0, 5, 8),
-        child: Container(
-          width: 162,
-          child: Column(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5.0),
-                child: AspectRatio(
-                    aspectRatio: 1.3,
-                    child: FadeInImage.assetNetwork(
-                        key: UniqueKey(),
-                        imageErrorBuilder: (context, error, stackTrace) {
-                          return Image.asset("assets/images/no_banner.png");
-                        },
-                        placeholder: "assets/images/global/outline.png",
-                        fadeInDuration: const Duration(milliseconds: 300),
-                        fadeOutDuration: const Duration(milliseconds: 100),
-                        image: item.vodPic,
-                        fit: BoxFit.fill)),
-              ),
-              SizedBox(height: 8),
-              Text(
-                item.vodName,
-                softWrap: true,
-                textAlign: TextAlign.left,
-                overflow: TextOverflow.ellipsis,
-                textDirection: TextDirection.ltr,
-                maxLines: 1,
-                style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _warpList() {
+  Widget _warpList(BuildContext context) {
     if (list.length != 0) {
       List<Widget> listWidget = list.map((item) {
-        return InkWell(
-          onTap: () {},
+        return GestureDetector(
+          onTap: () {
+            Provider.of<VideoProvider>(context, listen: false)
+                .updateModel(item);
+            Application.router.navigateTo(
+              context,
+              "/detail",
+              transition: TransitionType.fadeIn,
+            );
+          },
           child: Padding(
             padding: EdgeInsets.fromLTRB(5, 0, 5, 8),
             child: Container(
@@ -91,17 +59,18 @@ class TypeRecommend extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(5.0),
                     child: AspectRatio(
-                        aspectRatio: 1.3,
-                        child: FadeInImage.assetNetwork(
-                            key: UniqueKey(),
-                            imageErrorBuilder: (context, error, stackTrace) {
-                              return Image.asset("assets/images/no_banner.png");
-                            },
-                            placeholder: "assets/images/global/outline.png",
-                            fadeInDuration: const Duration(milliseconds: 300),
-                            fadeOutDuration: const Duration(milliseconds: 100),
-                            image: item.vodPic,
-                            fit: BoxFit.fill)),
+                      aspectRatio: 1.3,
+                      child: CachedNetworkImage(
+                        imageUrl: item.vodPic,
+                        placeholder: (context, url) => Image.asset(
+                            "assets/images/global/outline.png",
+                            fit: BoxFit.fill),
+                        errorWidget: (context, url, error) => Image.asset(
+                            "assets/images/no_banner.png",
+                            fit: BoxFit.fill),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                   ),
                   SizedBox(height: 8),
                   Text(
@@ -112,9 +81,10 @@ class TypeRecommend extends StatelessWidget {
                     textDirection: TextDirection.ltr,
                     maxLines: 1,
                     style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),

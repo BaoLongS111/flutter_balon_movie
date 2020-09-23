@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:balon_movie/common/utils/screen_adaper.dart';
-import 'package:balon_movie/pages/detail_page.dart';
+import 'package:balon_movie/model/home_recommend_model.dart';
 import 'package:balon_movie/provider/video_provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../routers/application.dart';
 
 class HomeRecommend extends StatelessWidget {
   final List list;
@@ -81,16 +86,21 @@ class HomeRecommend extends StatelessWidget {
     );
   }
 
-  Widget _gridViewItemUI(BuildContext context, item) {
+  Widget _gridViewItemUI(BuildContext context, HomeRecommendModel item) {
     return GestureDetector(
       onTap: () {
         Provider.of<VideoProvider>(context, listen: false).updateModel(item);
-        Navigator.push(
+        Application.router.navigateTo(
           context,
-          new MaterialPageRoute(
-            builder: (context) => DetailPage(model: item),
-          ),
+          "/detail",
+          transition: TransitionType.fadeIn,
         );
+        // Navigator.push(
+        //   context,
+        //   new MaterialPageRoute(
+        //     builder: (context) => DetailPage(model: item),
+        //   ),
+        // );
       },
       child: Container(
         height: ScreenAdaper.setHeight(300),
@@ -113,15 +123,14 @@ class HomeRecommend extends StatelessWidget {
                       BorderRadius.circular(ScreenAdaper.setHeight(15)),
                   child: AspectRatio(
                     aspectRatio: 1.3,
-                    child: FadeInImage.assetNetwork(
-                      key: UniqueKey(),
-                      imageErrorBuilder: (context, error, stackTrace) {
-                        return Image.asset("assets/images/no_banner.png");
-                      },
-                      placeholder: "assets/images/global/outline.png",
-                      fadeInDuration: const Duration(milliseconds: 300),
-                      fadeOutDuration: const Duration(milliseconds: 100),
-                      image: item.vodPic,
+                    child: CachedNetworkImage(
+                      imageUrl: item.vodPic,
+                      placeholder: (context, url) => Image.asset(
+                          "assets/images/global/outline.png",
+                          fit: BoxFit.fill),
+                      errorWidget: (context, url, error) => Image.asset(
+                          "assets/images/no_banner.png",
+                          fit: BoxFit.fill),
                       fit: BoxFit.fill,
                     ),
                   ),
