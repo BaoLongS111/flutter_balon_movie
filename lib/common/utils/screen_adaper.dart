@@ -13,12 +13,11 @@ class ScreenAdaper {
     // ScreenUtil.init(context, width: 750, height: 1334);
 
 //If you want to set the font size is scaled according to the system's "font size" assist option
-    ScreenUtil.init(context, width: 1080, height: 1920);
+    ScreenUtil.init(context, width: 1080, height: 1920, allowFontScaling: true);
   }
 
-  static setSp(double value, {bool allowFontScalingSelf = true}) {
-    return ScreenUtil()
-        .setSp(value, allowFontScalingSelf: allowFontScalingSelf);
+  static setSp(double value) {
+    return ScreenUtil().setSp(value);
 
     /// 获取 计算后的字体
   }

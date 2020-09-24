@@ -23,47 +23,41 @@ class HomeRecommend extends StatelessWidget {
     return Column(
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(
-                    ScreenAdaper.setWidth(14),
-                    0,
-                    ScreenAdaper.setWidth(14),
-                    0,
-                  ),
-                  height: ScreenAdaper.setHeight(45),
-                  width: ScreenAdaper.setWidth(16),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    gradient: LinearGradient(
-                      // 线性渐变，如果没有指定开始和结束的地方，则默认从左边到右边
-                      colors: [Color(0xffCB356B), Color(0xffCB356B)],
-                      begin: Alignment.topCenter, // 开始
-                      end: Alignment.bottomCenter, // 结束
-                    ),
-                    borderRadius: BorderRadius.circular(
-                      ScreenAdaper.setHeight(10),
-                    ),
+                  height: ScreenAdaper.setHeight(40),
+                  margin: EdgeInsets.only(right: ScreenAdaper.setWidth(20)),
+                  child: Image.asset(
+                    "assets/images/detail/icon_cnxh.png",
+                    width: ScreenAdaper.setWidth(48),
+                    height: ScreenAdaper.setHeight(48),
+                    fit: BoxFit.fill,
                   ),
                 ),
                 Text(
                   title,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: ScreenAdaper.setSp(48),
+                    fontSize: ScreenAdaper.setSp(56),
                   ),
                 ),
               ],
             ),
-            Text(
-              '更多>',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: ScreenAdaper.setSp(40),
+            Container(
+              padding: EdgeInsets.only(
+                right: ScreenAdaper.setWidth(26),
+              ),
+              child: Text(
+                '更多>',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: ScreenAdaper.setSp(46),
+                ),
               ),
             )
           ],
@@ -93,7 +87,7 @@ class HomeRecommend extends StatelessWidget {
         Application.router.navigateTo(
           context,
           "/detail",
-          transition: TransitionType.fadeIn,
+          transition: TransitionType.native,
         );
         // Navigator.push(
         //   context,

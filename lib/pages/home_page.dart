@@ -163,7 +163,7 @@ class _HomePageState extends State<HomePage>
             border: InputBorder.none,
             hintText: "小泽玛利亚",
             hintStyle: TextStyle(
-              fontSize: ScreenAdaper.setSp(38, allowFontScalingSelf: false),
+              fontSize: ScreenAdaper.setSp(38),
               color: Colors.white70,
               textBaseline: TextBaseline.alphabetic,
             ),

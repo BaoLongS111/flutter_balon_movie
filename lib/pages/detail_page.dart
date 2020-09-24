@@ -1,8 +1,12 @@
-import 'package:balon_movie/common/utils/date_format.dart';
+import 'dart:math';
+
 import 'package:balon_movie/common/utils/screen_adaper.dart';
+import 'package:balon_movie/dao/category_dao.dart';
 import 'package:balon_movie/model/home_recommend_model.dart';
 import 'package:balon_movie/provider/video_provider.dart';
+import 'package:balon_movie/widget/detail/detail_recommend.dart';
 import 'package:balon_movie/widget/detail/detail_tag.dart';
+import 'package:balon_movie/widget/detail/detail_title.dart';
 import 'package:balon_movie/widget/detail/detail_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,12 +28,14 @@ class _DetailPageState extends State<DetailPage>
   @override
   bool get wantKeepAlive => true;
 
-  HomeRecommendModel model;
+  HomeRecommendModel model; //当前打开视频的数据模型
   VideoPlayerController videoPlayerController;
   ChewieController chewieController;
 
-  List tagList; //标签
+  List tagList = []; //标签列表
+  String firstTag = "欧美"; //第一个标签，用于推荐
   String url; //视频路径
+  List<HomeRecommendModel> recommendList = []; //推荐视频列表
 
   final lightColor = Color.fromRGBO(255, 255, 255, 0.85);
   final darkColor = Color.fromRGBO(1, 1, 1, 0.35);
@@ -37,15 +43,12 @@ class _DetailPageState extends State<DetailPage>
   @override
   void initState() {
     super.initState();
-    model = Provider.of<VideoProvider>(context, listen: false).getModel();
-    url = model.vodPlayUrl.replaceAll("第一集\$", "");
+    //数据初始化
+    _initTag();
+    //推荐视频数据请求
+    _loadRecommend();
     //控制器初始化
     _initController();
-    if (model.vodTag == "") {
-      tagList = [];
-    } else {
-      tagList = model.vodTag.trim().split(",");
-    }
   }
 
   @override
@@ -53,6 +56,26 @@ class _DetailPageState extends State<DetailPage>
     videoPlayerController.dispose();
     chewieController.dispose();
     super.dispose();
+  }
+
+  Future<Null> _loadRecommend() async {
+    await CategoryDao.getCategoryRecommend(tag: firstTag).then((value) {
+      setState(() {
+        this.recommendList = value;
+      });
+    });
+  }
+
+  void _initTag() {
+    model = Provider.of<VideoProvider>(context, listen: false).getModel();
+
+    if (model.vodTag == "") {
+      tagList = ["推荐"];
+    } else {
+      tagList = model.vodTag.trim().split(",");
+      firstTag = tagList[0];
+    }
+    url = model.vodPlayUrl.replaceAll("第一集\$", "");
   }
 
   void _initController() {
@@ -113,101 +136,7 @@ class _DetailPageState extends State<DetailPage>
                       ),
                       child: Image.asset("assets/images/home/box_banner.png"),
                     ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(
-                        ScreenAdaper.setWidth(40),
-                        0,
-                        ScreenAdaper.setWidth(40),
-                        ScreenAdaper.setHeight(24),
-                      ),
-                      child: Text(
-                        model.vodName,
-                        softWrap: true,
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        textDirection: TextDirection.ltr,
-                        maxLines: 3,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: ScreenAdaper.setSp(
-                            46,
-                            allowFontScalingSelf: false,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(
-                        ScreenAdaper.setWidth(15),
-                        ScreenAdaper.setWidth(15),
-                        0,
-                        ScreenAdaper.setWidth(20),
-                      ),
-                      padding: EdgeInsets.only(
-                        left: ScreenAdaper.setWidth(30),
-                      ),
-                      height: ScreenAdaper.setHeight(50),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            "assets/images/detail/icon_pf.png",
-                            height: ScreenAdaper.setWidth(38),
-                            width: ScreenAdaper.setWidth(38),
-                          ),
-                          SizedBox(
-                            width: ScreenAdaper.setWidth(5),
-                          ),
-                          Text(
-                            model.vodScore.toString(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: ScreenAdaper.setSp(35),
-                              color: Colors.yellow,
-                            ),
-                          ),
-                          SizedBox(
-                            width: ScreenAdaper.setWidth(20),
-                          ),
-                          Image.asset(
-                            "assets/images/detail/icon_gxsj.png",
-                            height: ScreenAdaper.setWidth(38),
-                            width: ScreenAdaper.setWidth(38),
-                          ),
-                          SizedBox(
-                            width: ScreenAdaper.setWidth(10),
-                          ),
-                          Text(
-                            DateUtils.instance.getFormartData(
-                                timeSamp: model.vodTimeAdd,
-                                format: "yyyy-MM-dd"),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: ScreenAdaper.setSp(35),
-                              color: Colors.white70,
-                            ),
-                          ),
-                          SizedBox(
-                            width: ScreenAdaper.setWidth(20),
-                          ),
-                          Image.asset(
-                            "assets/images/detail/icon_play_num.png",
-                            height: ScreenAdaper.setWidth(38),
-                            width: ScreenAdaper.setWidth(38),
-                          ),
-                          SizedBox(
-                            width: ScreenAdaper.setWidth(10),
-                          ),
-                          Text(
-                            model.vodHits.toString(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: ScreenAdaper.setSp(35),
-                              color: Colors.white70,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    DetailTitle(),
                     DetailWidget(),
                     DetailTag(tags: tagList),
                     Padding(
@@ -219,6 +148,7 @@ class _DetailPageState extends State<DetailPage>
                       ),
                       child: Image.asset("assets/images/home/banner_look.png"),
                     ),
+                    DetailRecommend(list: recommendList)
                   ],
                 ),
               ),

@@ -3,20 +3,24 @@ import 'package:flutter/material.dart';
 
 class DetailTag extends StatelessWidget {
   final List tags;
-  const DetailTag({Key key, @required this.tags}) : super(key: key);
+  final int tagNum;
+  const DetailTag({Key key, @required this.tags, this.tagNum = 0})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (tagNum != 0 && tags.length > 4) {
+      tags.removeRange(4, tags.length);
+    }
     return tags.length > 0
-        ? Container(
+        ? Padding(
             padding: EdgeInsets.only(
-              left: ScreenAdaper.setWidth(20),
-              right: ScreenAdaper.setWidth(20),
+              left: tagNum == 0 ? ScreenAdaper.setWidth(40) : 0,
+              right: tagNum == 0 ? ScreenAdaper.setWidth(20) : 0,
             ),
-            height: ScreenAdaper.setHeight(130),
             child: Wrap(
-              spacing: ScreenAdaper.setWidth(16),
-              runSpacing: ScreenAdaper.setHeight(12),
+              spacing: ScreenAdaper.setWidth(tagNum == 0 ? 16 : 50),
+              runSpacing: ScreenAdaper.setHeight(tagNum == 0 ? 12 : 20),
               children: tags.map((i) => _itemUI(i)).toList(),
             ),
           )
@@ -29,9 +33,9 @@ class DetailTag extends StatelessWidget {
       width: ScreenAdaper.setWidth(150),
       padding: EdgeInsets.fromLTRB(
         ScreenAdaper.setWidth(6),
-        ScreenAdaper.setWidth(14),
+        ScreenAdaper.setHeight(10),
         ScreenAdaper.setWidth(6),
-        ScreenAdaper.setWidth(14),
+        ScreenAdaper.setHeight(10),
       ),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(
@@ -40,11 +44,12 @@ class DetailTag extends StatelessWidget {
           color: Colors.purpleAccent),
       child: Text(
         title,
+        softWrap: true,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
           color: Colors.white70,
-          fontSize: ScreenAdaper.setSp(32),
+          fontSize: ScreenAdaper.setSp(28),
         ),
         textAlign: TextAlign.center,
       ),

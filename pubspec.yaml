@@ -90,6 +90,8 @@ flutter:
       fonts:
         - asset: assets/fonts/iconfont.ttf
   assets:
+    - assets/images/detail/icon_cnxh.png
+    - assets/images/detail/icon_like_dz.png
     - assets/images/detail/icon_xz.png
     - assets/images/detail/icon_fx.png
     - assets/images/detail/icon_sc_1.png
