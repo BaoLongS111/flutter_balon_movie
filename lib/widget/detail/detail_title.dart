@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:balon_movie/common/utils/date_format.dart';
 import 'package:balon_movie/common/utils/screen_adaper.dart';
 import 'package:balon_movie/provider/video_provider.dart';

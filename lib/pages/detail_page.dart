@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:balon_movie/common/utils/screen_adaper.dart';
 import 'package:balon_movie/dao/category_dao.dart';
 import 'package:balon_movie/model/home_recommend_model.dart';
@@ -74,6 +72,7 @@ class _DetailPageState extends State<DetailPage>
     } else {
       tagList = model.vodTag.trim().split(",");
       firstTag = tagList[0];
+      print(firstTag);
     }
     url = model.vodPlayUrl.replaceAll("第一集\$", "");
   }

@@ -1,4 +1,3 @@
-import 'package:balon_movie/common/loading/loading_indicator.dart';
 import 'package:balon_movie/common/utils/screen_adaper.dart';
 import 'package:balon_movie/model/home_recommend_model.dart';
 import 'package:balon_movie/provider/video_provider.dart';
@@ -15,6 +14,7 @@ class DetailRecommend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenAdaper.init(context);
     return Column(
       children: [
         _title(),
@@ -71,9 +71,9 @@ class DetailRecommend extends StatelessWidget {
               transition: TransitionType.fadeIn,
             );
           },
-          child: Container(
+          child: Padding(
             padding: EdgeInsets.all(
-              ScreenAdaper.setHeight(20),
+              ScreenAdaper.setWidth(20),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,11 +102,11 @@ class DetailRecommend extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    height: ScreenAdaper.setHeight(330),
-                    child: Column(
-                      children: [
-                        Text(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: ScreenAdaper.setHeight(110),
+                        child: Text(
                           i.vodName,
                           softWrap: true,
                           overflow: TextOverflow.ellipsis,
@@ -116,22 +116,23 @@ class DetailRecommend extends StatelessWidget {
                             fontSize: ScreenAdaper.setSp(40),
                           ),
                         ),
-                        SizedBox(
-                          height: ScreenAdaper.setHeight(14),
+                      ),
+                      Container(
+                        height: ScreenAdaper.setHeight(180),
+                        padding: EdgeInsets.only(
+                          top: ScreenAdaper.setHeight(20),
+                          bottom: ScreenAdaper.setHeight(20),
                         ),
-                        Container(
-                          height: ScreenAdaper.setWidth(190),
-                          child: DetailTag(
-                            tags: i.vodTag == ""
-                                ? []
-                                : i.vodTag.trim().split(","),
-                            tagNum: 4,
-                          ),
+                        child: DetailTag(
+                          tags:
+                              i.vodTag == "" ? [] : i.vodTag.trim().split(","),
+                          tagNum: 4,
                         ),
-                        SizedBox(
-                          height: ScreenAdaper.setHeight(14),
-                        ),
-                        Row(
+                      ),
+                      Container(
+                        alignment: Alignment.bottomLeft,
+                        height: ScreenAdaper.setHeight(40),
+                        child: Row(
                           children: [
                             Image.asset(
                               "assets/images/detail/icon_like_dz.png",
@@ -169,9 +170,9 @@ class DetailRecommend extends StatelessWidget {
                               ),
                             ),
                           ],
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
                 )
               ],
@@ -186,8 +187,10 @@ class DetailRecommend extends StatelessWidget {
       );
     } else {
       return Center(
-        child: BallPulseSyncIndicator(
-          ballColor: Colors.purpleAccent,
+        child: Text(
+          "暂无推荐...",
+          style:
+              TextStyle(fontSize: ScreenAdaper.setSp(38), color: Colors.white),
         ),
       );
     }

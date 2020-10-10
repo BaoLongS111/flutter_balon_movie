@@ -3,8 +3,8 @@ import 'package:balon_movie/model/home_model.dart';
 import 'package:balon_movie/model/home_recommend_model.dart';
 import 'package:dio/dio.dart';
 
-const HOME_DATA = "http://212.64.93.42:3000/api/home_data";
-const CATEGORY_DATA = "http://212.64.93.42:3000/api/category_data";
+const HOME_DATA = "http://112.124.26.108:3000/api/home_data";
+const CATEGORY_DATA = "http://112.124.26.108:3000/api/category_data";
 
 class HomeDao {
   static Future<HomeModel> getHomeData() async {

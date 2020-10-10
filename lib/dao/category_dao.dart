@@ -1,8 +1,8 @@
 import 'package:balon_movie/model/home_recommend_model.dart';
 import 'package:dio/dio.dart';
 
-const CATEGORY_PAGE = "http://212.64.93.42:3000/api/page";
-const CATEGORY_RECOMMEND = "http://212.64.93.42:3000/api/recommend";
+const CATEGORY_PAGE = "http://112.124.26.108:3000/api/page";
+const CATEGORY_RECOMMEND = "http://112.124.26.108:3000/api/recommend";
 
 class CategoryDao {
   static Future<List<HomeRecommendModel>> loadMoreCategoryData(

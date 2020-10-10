@@ -81,7 +81,7 @@ class HomeModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data["casual"] = this.homeCasual;
     data["guochan"] = this.guochan;
     data["jingpin"] = this.jingpin;

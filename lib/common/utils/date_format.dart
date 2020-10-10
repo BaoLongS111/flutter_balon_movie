@@ -95,7 +95,7 @@ class DateUtils {
       {startTime: String, dayNumber: int, format: String}) {
     var mDataList = List<String>();
     //记录往后每一天的时间搓，用来和最后一天到做对比。这样就能知道什么时候停止了。
-    int allTimeEnd = 0;
+    // int allTimeEnd = 0;
     //记录当前到个数(相当于天数)
     int currentFlag = 0;
     DateTime startData = DateTime.parse(startTime);
@@ -117,7 +117,7 @@ class DateUtils {
       {startTime: int, dayNumber: int, format: String}) {
     var mDataList = List<TimeData>();
     //记录往后每一天的时间搓，用来和最后一天到做对比。这样就能知道什么时候停止了。
-    int allTimeEnd = 0;
+    // int allTimeEnd = 0;
     //记录当前到个数(相当于天数)
     int currentFlag = 0;
     var mothFormatFlag = new DateFormat(format);

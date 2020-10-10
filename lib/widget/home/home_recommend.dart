@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:balon_movie/common/utils/screen_adaper.dart';
 import 'package:balon_movie/model/home_recommend_model.dart';
 import 'package:balon_movie/provider/video_provider.dart';
@@ -13,9 +11,14 @@ class HomeRecommend extends StatelessWidget {
   final List list;
   final String title;
   final bool isShowTitle;
+  final Widget adv;
 
   const HomeRecommend(
-      {Key key, @required this.list, this.title, this.isShowTitle = true})
+      {Key key,
+      @required this.list,
+      this.title,
+      this.isShowTitle = true,
+      this.adv})
       : super(key: key);
 
   @override
@@ -75,7 +78,7 @@ class HomeRecommend extends StatelessWidget {
             physics: NeverScrollableScrollPhysics(),
             children: list.map((i) => _gridViewItemUI(context, i)).toList(),
           ),
-        )
+        ),
       ],
     );
   }
