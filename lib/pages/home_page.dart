@@ -203,38 +203,40 @@ class _HomePageState extends State<HomePage>
               DateTime.now().minute.toString(),
           infoColor: Colors.white70),
       onRefresh: _handleRefresh,
-      child: ListView(
-        children: [
-          HomeSwiper(casualList: this.homeModel.homeCasual),
-          HomeNav(),
-          HomeRecommend(list: this.homeModel.jingpin, title: "精品推荐"),
-          HomeRecommend(list: this.homeModel.guochan, title: "国产情色"),
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-              ScreenAdaper.setHeight(20),
-              ScreenAdaper.setHeight(8),
-              ScreenAdaper.setHeight(20),
-              ScreenAdaper.setHeight(20),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            HomeSwiper(casualList: this.homeModel.homeCasual),
+            HomeNav(),
+            HomeRecommend(list: this.homeModel.jingpin, title: "精品推荐"),
+            HomeRecommend(list: this.homeModel.guochan, title: "国产情色"),
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                ScreenAdaper.setHeight(20),
+                ScreenAdaper.setHeight(8),
+                ScreenAdaper.setHeight(20),
+                ScreenAdaper.setHeight(20),
+              ),
+              child: Image.asset("assets/images/home/banner_look.png"),
             ),
-            child: Image.asset("assets/images/home/banner_look.png"),
-          ),
-          HomeRecommend(list: this.homeModel.wuma, title: "无码专区"),
-          HomeRecommend(list: this.homeModel.yazhou, title: "亚洲有码"),
-          HomeRecommend(list: this.homeModel.zhongwen, title: "中文字幕"),
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-              ScreenAdaper.setHeight(20),
-              ScreenAdaper.setHeight(8),
-              ScreenAdaper.setHeight(20),
-              ScreenAdaper.setHeight(20),
+            HomeRecommend(list: this.homeModel.wuma, title: "无码专区"),
+            HomeRecommend(list: this.homeModel.yazhou, title: "亚洲有码"),
+            HomeRecommend(list: this.homeModel.zhongwen, title: "中文字幕"),
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                ScreenAdaper.setHeight(20),
+                ScreenAdaper.setHeight(8),
+                ScreenAdaper.setHeight(20),
+                ScreenAdaper.setHeight(20),
+              ),
+              child: Image.asset("assets/images/home/box_banner.png"),
             ),
-            child: Image.asset("assets/images/home/box_banner.png"),
-          ),
-          HomeRecommend(list: this.homeModel.lunli, title: "经典伦理"),
-          HomeRecommend(list: this.homeModel.katong, title: "成人动漫"),
-          HomeRecommend(list: this.homeModel.shunv, title: "熟女人妻"),
-          HomeRecommend(list: this.homeModel.oumei, title: "欧美性爱"),
-        ],
+            HomeRecommend(list: this.homeModel.lunli, title: "经典伦理"),
+            HomeRecommend(list: this.homeModel.katong, title: "成人动漫"),
+            HomeRecommend(list: this.homeModel.shunv, title: "熟女人妻"),
+            HomeRecommend(list: this.homeModel.oumei, title: "欧美性爱"),
+          ],
+        ),
       ),
     );
   }
