@@ -67,83 +67,80 @@ class _TabNavigatorState extends State<TabNavigator> {
           currentIndex: _currentIndex,
           items: [
             BottomNavigationBarItem(
-                icon: Image.asset(
-                  "assets/images/tabbar/icon_shouye.png",
-                  fit: BoxFit.fill,
-                  width: 24,
-                  height: 24,
-                ),
-                activeIcon: Image.asset(
-                  "assets/images/tabbar/icon_shouye_sel.png",
-                  fit: BoxFit.fill,
-                  width: 24,
-                  height: 24,
-                ),
-                title: Text("首页")),
+              icon: Image.asset(
+                "assets/images/tabbar/icon_shouye.png",
+                fit: BoxFit.fill,
+                width: 24,
+                height: 24,
+              ),
+              activeIcon: Image.asset(
+                "assets/images/tabbar/icon_shouye_sel.png",
+                fit: BoxFit.fill,
+                width: 24,
+                height: 24,
+              ),
+              label: "首页",
+            ),
             BottomNavigationBarItem(
-                icon: Image.asset(
-                  "assets/images/tabbar/icon_fenlei.png",
-                  fit: BoxFit.fill,
-                  width: 22,
-                  height: 22,
-                ),
-                activeIcon: Image.asset(
-                  "assets/images/tabbar/icon_fenlei_sel.png",
-                  fit: BoxFit.fill,
-                  width: 24,
-                  height: 24,
-                ),
-                title: Text(
-                  "分类",
-                )),
+              icon: Image.asset(
+                "assets/images/tabbar/icon_fenlei.png",
+                fit: BoxFit.fill,
+                width: 22,
+                height: 22,
+              ),
+              activeIcon: Image.asset(
+                "assets/images/tabbar/icon_fenlei_sel.png",
+                fit: BoxFit.fill,
+                width: 24,
+                height: 24,
+              ),
+              label: "分类",
+            ),
             BottomNavigationBarItem(
-                icon: Image.asset(
-                  "assets/images/tabbar/icon_short_video.png",
-                  fit: BoxFit.fill,
-                  width: 22,
-                  height: 22,
-                ),
-                activeIcon: Image.asset(
-                  "assets/images/tabbar/icon_short_video_sel.png",
-                  fit: BoxFit.fill,
-                  width: 24,
-                  height: 24,
-                ),
-                title: Text(
-                  "小视频",
-                )),
+              icon: Image.asset(
+                "assets/images/tabbar/icon_short_video.png",
+                fit: BoxFit.fill,
+                width: 22,
+                height: 22,
+              ),
+              activeIcon: Image.asset(
+                "assets/images/tabbar/icon_short_video_sel.png",
+                fit: BoxFit.fill,
+                width: 24,
+                height: 24,
+              ),
+              label: "小视频",
+            ),
             BottomNavigationBarItem(
-                icon: Image.asset(
-                  "assets/images/tabbar/icon_redian.png",
-                  fit: BoxFit.fill,
-                  width: 22,
-                  height: 22,
-                ),
-                activeIcon: Image.asset(
-                  "assets/images/tabbar/icon_redian_sel.png",
-                  fit: BoxFit.fill,
-                  width: 24,
-                  height: 24,
-                ),
-                title: Text(
-                  "热点",
-                )),
+              icon: Image.asset(
+                "assets/images/tabbar/icon_redian.png",
+                fit: BoxFit.fill,
+                width: 22,
+                height: 22,
+              ),
+              activeIcon: Image.asset(
+                "assets/images/tabbar/icon_redian_sel.png",
+                fit: BoxFit.fill,
+                width: 24,
+                height: 24,
+              ),
+              label: "热点",
+            ),
             BottomNavigationBarItem(
-                icon: Image.asset(
-                  "assets/images/tabbar/icon_wode.png",
-                  fit: BoxFit.fill,
-                  width: 22,
-                  height: 22,
-                ),
-                activeIcon: Image.asset(
-                  "assets/images/tabbar/icon_wode_sel.png",
-                  fit: BoxFit.fill,
-                  width: 24,
-                  height: 24,
-                ),
-                title: Text(
-                  "我的",
-                )),
+              icon: Image.asset(
+                "assets/images/tabbar/icon_wode.png",
+                fit: BoxFit.fill,
+                width: 22,
+                height: 22,
+              ),
+              activeIcon: Image.asset(
+                "assets/images/tabbar/icon_wode_sel.png",
+                fit: BoxFit.fill,
+                width: 24,
+                height: 24,
+              ),
+              label: "我的",
+            ),
           ],
         ),
       ),

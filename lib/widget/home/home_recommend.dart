@@ -2,16 +2,18 @@ import 'package:balon_movie/common/utils/screen_adaper.dart';
 import 'package:balon_movie/model/home_recommend_model.dart';
 import 'package:balon_movie/provider/video_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:balon_movie/common/components/title_head.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../routers/application.dart';
 
+///主页的UI
 class HomeRecommend extends StatelessWidget {
-  final List list;
-  final String title;
-  final bool isShowTitle;
-  final Widget adv;
+  final List list; //视频数据
+  final String title; //标题
+  final bool isShowTitle; //是否显示标题
+  final Widget adv; //广告
 
   const HomeRecommend(
       {Key key,
@@ -25,45 +27,9 @@ class HomeRecommend extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  height: ScreenAdaper.setHeight(40),
-                  margin: EdgeInsets.only(right: ScreenAdaper.setWidth(20)),
-                  child: Image.asset(
-                    "assets/images/detail/icon_cnxh.png",
-                    width: ScreenAdaper.setWidth(48),
-                    height: ScreenAdaper.setHeight(48),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: ScreenAdaper.setSp(56),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              padding: EdgeInsets.only(
-                right: ScreenAdaper.setWidth(26),
-              ),
-              child: Text(
-                '更多>',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: ScreenAdaper.setSp(46),
-                ),
-              ),
-            )
-          ],
+        TitleHead(
+          title: this.title,
+          isShowMore: true,
         ),
         Container(
           height: ScreenAdaper.setWidth(1600),
@@ -90,14 +56,8 @@ class HomeRecommend extends StatelessWidget {
         Application.router.navigateTo(
           context,
           "/detail",
-          transition: TransitionType.native,
+          transition: TransitionType.fadeIn,
         );
-        // Navigator.push(
-        //   context,
-        //   new MaterialPageRoute(
-        //     builder: (context) => DetailPage(model: item),
-        //   ),
-        // );
       },
       child: Container(
         height: ScreenAdaper.setHeight(300),

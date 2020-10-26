@@ -6,28 +6,10 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+///搜索页和类型页的UI
 class TypeRecommend extends StatelessWidget {
   final List list;
   const TypeRecommend({Key key, @required this.list}) : super(key: key);
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return list.length != 0
-  //       ? Container(
-  //           height: 800,
-  //           padding: EdgeInsets.fromLTRB(3, 5, 3, 5),
-  //           child: GridView.count(
-  //             physics: NeverScrollableScrollPhysics(),
-  //             crossAxisCount: 2,
-  //             children: list.map((i) => _girdItemUI(i)).toList(),
-  //           ),
-  //         )
-  //       : Center(
-  //           child: BallPulseSyncIndicator(
-  //             ballColor: Colors.purpleAccent,
-  //           ),
-  //         );
-  // }
 
   @override
   Widget build(BuildContext context) {

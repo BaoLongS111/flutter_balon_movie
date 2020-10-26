@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:balon_movie/routers/application.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:balon_movie/common/loading/loading_indicator.dart';
 import 'package:balon_movie/common/utils/screen_adaper.dart';
@@ -20,13 +22,11 @@ class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-
+  FocusNode mfocusmode = FocusNode(); //控制输入框的焦点获取
   // Future<HomeModel> _future; //keepAlive
   bool isFirstLoad = true; //是否第一次加载，第一次显示loadingView，否则不显示
   //首页数据
   HomeModel homeModel;
-  //视频数据
-  // List<List> videoList = [];
   //上次刷新时间
   DateTime lastRefresh;
   //类型列表
@@ -47,15 +47,6 @@ class _HomePageState extends State<HomePage>
       HomeDao.getHomeData().then((value) {
         setState(() {
           homeModel = value;
-          // videoList[0] = homeModel.guochan;
-          // videoList[1] = homeModel.jingpin;
-          // videoList[2] = homeModel.wuma;
-          // videoList[3] = homeModel.shunv;
-          // videoList[4] = homeModel.katong;
-          // videoList[5] = homeModel.lunli;
-          // videoList[6] = homeModel.zhongwen;
-          // videoList[7] = homeModel.yazhou;
-          // videoList[8] = homeModel.oumei;
           isFirstLoad = false;
         });
       });
@@ -120,12 +111,17 @@ class _HomePageState extends State<HomePage>
           onPressed: null),
       title: Container(
         height: ScreenAdaper.setHeight(80),
-        padding: EdgeInsets.fromLTRB(
-            ScreenAdaper.setHeight(30), 0, ScreenAdaper.setHeight(30), 0),
+        alignment: Alignment.center,
         decoration: BoxDecoration(
             color: Color(0x33bdc3c7), borderRadius: BorderRadius.circular(15)),
         child: TextField(
+          focusNode: mfocusmode,
           autofocus: false,
+          onTap: () {
+            mfocusmode.unfocus(); //移除焦点
+            Application.router.navigateTo(context, "/search",
+                transition: TransitionType.fadeIn);
+          },
           minLines: 1,
           enableInteractiveSelection: false,
           textAlign: TextAlign.left,
@@ -158,7 +154,6 @@ class _HomePageState extends State<HomePage>
                 ScreenAdaper.setWidth(30),
               ),
             ),
-            border: InputBorder.none,
             hintText: "小泽玛利亚",
             hintStyle: TextStyle(
               fontSize: ScreenAdaper.setSp(38),

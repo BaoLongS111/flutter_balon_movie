@@ -1,6 +1,6 @@
 import 'package:balon_movie/provider/category_provider.dart';
 import 'package:balon_movie/provider/video_provider.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 import 'package:balon_movie/navigator/tab_navigator.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: "暴龙视频",
-        onGenerateRoute: Application.router.generator,
+        onGenerateRoute: Application.router.generator, // 配置route generate
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             primarySwatch: Colors.blue,
